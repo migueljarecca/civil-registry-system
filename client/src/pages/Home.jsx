@@ -32,7 +32,7 @@ export const Home = () => {
                             <img src={birth} alt="Birth Certificate" />
                         </div>
                         <div className="home-services__card-text">
-                            <h2>Birth Certificate</h2>
+                            <h2>Birth</h2>
                         </div>
                     </div>
 
@@ -42,7 +42,7 @@ export const Home = () => {
                             <img src={marriage} alt="Marriage Certificate" />
                         </div>
                         <div className="home-services__card-text">
-                            <h2>Marriage Certificate</h2>
+                            <h2>Marriage</h2>
                         </div>
                     </div>
 
@@ -52,7 +52,7 @@ export const Home = () => {
                             <img src={death} alt="Death Certificate" />
                         </div>
                         <div className="home-services__card-text">
-                            <h2>Death Certificate</h2>
+                            <h2>Death</h2>
                         </div>
                     </div>
 
