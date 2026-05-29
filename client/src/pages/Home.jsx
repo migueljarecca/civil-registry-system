@@ -27,7 +27,7 @@ export const Home = () => {
                 <div className="home-services__grid">
 
                     <div className="home-services__card">
-                        <NavLink to="/services" className="home-services__item"></NavLink>
+                        <NavLink to="/births" className="home-services__card-link"></NavLink>
                         <div className="home-services__card-img-wrapper">
                             <img src={birth} alt="Birth Certificate" />
                         </div>
@@ -37,7 +37,7 @@ export const Home = () => {
                     </div>
 
                     <div className="home-services__card">
-                        <NavLink to="/services" className="home-services__item"></NavLink>
+                        <NavLink to="/marriages" className="home-services__card-link"></NavLink>
                         <div className="home-services__card-img-wrapper">
                             <img src={marriage} alt="Marriage Certificate" />
                         </div>
@@ -47,7 +47,7 @@ export const Home = () => {
                     </div>
 
                     <div className="home-services__card">
-                        <NavLink to="/services" className="home-services__item"></NavLink>
+                        <NavLink to="/deaths" className="home-services__card-link"></NavLink>
                         <div className="home-services__card-img-wrapper">
                             <img src={death} alt="Death Certificate" />
                         </div>

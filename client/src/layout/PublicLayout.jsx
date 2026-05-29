@@ -1,11 +1,13 @@
-import { Home } from "../pages/Home"
+import { Outlet } from "react-router-dom"
 
 export const PublicLayout = () => {
 
     return (
     
         <>
-            <Home />
+            <main >
+                <Outlet />
+            </main>
         </>
     )
 }
