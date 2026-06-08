@@ -1,52 +1,28 @@
-package com.civil_registry.app.models.entities;
+package com.civil_registry.app.models.dto;
 
 import java.time.LocalDate;
 
 import com.civil_registry.app.enums.Gender;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class Citizen {
+public class CitizenCreateDto {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private String dni;
     private String name;
     private String fatherLastName;
     private String motherLastName;
     private LocalDate birthDate;
-
-    @Enumerated(EnumType.STRING)
     private Gender gender;
-    
 
-    public Citizen() {
+    public CitizenCreateDto() {
     }
 
-    public Citizen(Long id, String dni, String name, String fatherLastName, String motherLastName, LocalDate birthDate, Gender gender) {
-        this.id = id;
+    public CitizenCreateDto(String dni, String name, String fatherLastName, String motherLastName, LocalDate birthDate, Gender gender) {
         this.dni = dni;
         this.name = name;
         this.fatherLastName = fatherLastName;
         this.motherLastName = motherLastName;
         this.birthDate = birthDate;
         this.gender = gender;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getDni() {
@@ -99,17 +75,7 @@ public class Citizen {
 
     @Override
     public String toString() {
-        return "Citizen{" +
-                "id=" + id +
-                ", dni='" + dni + '\'' +
-                ", name='" + name + '\'' +
-                ", fatherLastName='" + fatherLastName + '\'' +
-                ", motherLastName='" + motherLastName + '\'' +
-                ", birthDate=" + birthDate +
-                ", gender=" + gender +
-                '}';
+        return "CitizenDto [dni=" + dni + ", name=" + name + ", fatherLastName=" + fatherLastName + ", motherLastName="
+                + motherLastName + ", birthDate=" + birthDate + ", gender=" + gender + "]";
     }
-
 }
-
-
