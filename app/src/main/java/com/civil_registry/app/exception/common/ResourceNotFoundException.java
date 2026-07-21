@@ -1,13 +1,12 @@
-package com.civil_registry.app.exception;
+package com.civil_registry.app.exception.common;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException{
+public class ResourceNotFoundException extends RuntimeException {
     
-    public ResourceNotFoundException(String resourceName, String fieldName, Long fieldValue) {
+        public ResourceNotFoundException(String resourceName, String fieldName, Long fieldValue) {
         super(String.format("%s not found with the given input data %s: %s", resourceName, fieldName, fieldValue));
     }
- 
 }

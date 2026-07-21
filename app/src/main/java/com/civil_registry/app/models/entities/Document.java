@@ -1,7 +1,5 @@
 package com.civil_registry.app.models.entities;
 
-import java.time.LocalDateTime;
-
 import com.civil_registry.app.enums.DocumentStatus;
 import com.civil_registry.app.enums.DocumentType;
 
@@ -14,8 +12,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "documents")
 public class Document {
     
     @Id
@@ -26,9 +26,7 @@ public class Document {
 
     @Enumerated(EnumType.STRING)
     private DocumentType documentType;
-    
-    private LocalDateTime issueDate;
-    
+        
     @Enumerated(EnumType.STRING)
     private DocumentStatus status;
 
@@ -45,12 +43,10 @@ public class Document {
     public Document() {
     }
 
-    public Document(Long id, String documentNumber, DocumentType documentType, LocalDateTime issueDate,
-            DocumentStatus status, String description, Citizen citizen, FileDocument fileDocument) {
+    public Document(Long id, String documentNumber, DocumentType documentType, DocumentStatus status, String description, Citizen citizen, FileDocument fileDocument) {
         this.id = id;
         this.documentNumber = documentNumber;
         this.documentType = documentType;
-        this.issueDate = issueDate;
         this.status = status;
         this.description = description;
         this.citizen = citizen;
@@ -79,14 +75,6 @@ public class Document {
 
     public void setDocumentType(DocumentType documentType) {
         this.documentType = documentType;
-    }
-
-    public LocalDateTime getIssueDate() {
-        return issueDate;
-    }
-
-    public void setIssueDate(LocalDateTime issueDate) {
-        this.issueDate = issueDate;
     }
 
     public DocumentStatus getStatus() {
@@ -124,7 +112,7 @@ public class Document {
     @Override
     public String toString() {
         return "Document [id=" + id + ", documentNumber=" + documentNumber + ", documentType=" + documentType
-                + ", issueDate=" + issueDate + ", status=" + status + ", description=" + description + ", citizen="
+                + ", status=" + status + ", description=" + description + ", citizen="
                 + citizen + ", fileDocument=" + fileDocument + "]";
     }
 

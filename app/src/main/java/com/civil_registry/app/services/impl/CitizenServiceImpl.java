@@ -7,8 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.civil_registry.app.exception.CitizenAlreadyExistsException;
-import com.civil_registry.app.exception.ResourceNotFoundException;
+import com.civil_registry.app.exception.CitizenDniModificationException;
+import com.civil_registry.app.exception.common.ResourceAlreadyExistsException;
+import com.civil_registry.app.exception.common.ResourceNotFoundException;
 import com.civil_registry.app.models.dto.CitizenCreateDto;
 import com.civil_registry.app.models.dto.CitizenResponseDto;
 import com.civil_registry.app.models.entities.Citizen;
@@ -54,7 +55,7 @@ public class CitizenServiceImpl implements ICitizenService {
         Optional<Citizen> opCitizen = citizenRepository.findByDni(citizen.getDni());
 
         if (opCitizen.isPresent()) {
-            throw new CitizenAlreadyExistsException("Citizen with DNI " + citizen.getDni() + " already exists");
+            throw new ResourceAlreadyExistsException("Citizen with DNI " + citizen.getDni() + " already exists");
         }
 
         citizenRepository.save(citizen);
@@ -91,6 +92,10 @@ public class CitizenServiceImpl implements ICitizenService {
         Citizen citizen = citizenRepository.findById(id).orElseThrow(
             () -> new ResourceNotFoundException("Citizen", "id", id)
         );
+
+        if (!citizen.getDni().equals(citizenCreateDto.getDni())) {
+            throw new CitizenDniModificationException(citizen.getDni());
+}
 
         CitizenMapper.updateCitizenFromDto(citizen, citizenCreateDto);
 

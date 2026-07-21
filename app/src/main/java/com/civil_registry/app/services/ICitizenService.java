@@ -12,19 +12,20 @@ public interface ICitizenService {
      * @return List of all citizens
      */
     List<CitizenResponseDto> fetchAllCitizens();
-    
-    /**
-     * @param citizenCreateDto - citizenCreateDto Object
-     */
-    void createCitizen(CitizenCreateDto citizenCreateDto);
-    
 
+    
     /**
      * @param id - input id
      * @return Citizen details based on a given id.
      */
     CitizenResponseDto fetchCitizen(Long id);
 
+    
+    /**
+     * @param citizenCreateDto - citizenCreateDto Object
+     */
+    void createCitizen(CitizenCreateDto citizenCreateDto);
+    
 
     /**
      *

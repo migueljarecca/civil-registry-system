@@ -1,4 +1,4 @@
-package com.civil_registry.app.exception;
+package com.civil_registry.app.exception.handler;
 
 import java.time.LocalDateTime;
 
@@ -8,14 +8,17 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import com.civil_registry.app.exception.citizen.CitizenDniModificationException;
+import com.civil_registry.app.exception.common.ResourceAlreadyExistsException;
+import com.civil_registry.app.exception.common.ResourceNotFoundException;
 import com.civil_registry.app.models.dto.ErrorResponseDto;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(CitizenAlreadyExistsException.class)
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
     public ResponseEntity<ErrorResponseDto>handleCitizenAlreadyExistsException(
-            CitizenAlreadyExistsException exception,
+            ResourceAlreadyExistsException exception,
             WebRequest webRequest){
 
             ErrorResponseDto errorResponseDto = new ErrorResponseDto(
@@ -43,5 +46,20 @@ public class GlobalExceptionHandler {
 
             return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
         }
-            
+       
+        
+    @ExceptionHandler(CitizenDniModificationException.class)
+    public ResponseEntity<ErrorResponseDto>handleCitizenDniModificationException(
+            CitizenDniModificationException exception,
+            WebRequest webRequest){
+
+            ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                webRequest.getDescription(false),
+                HttpStatus.BAD_REQUEST,
+                exception.getMessage(),
+                LocalDateTime.now()
+            );
+
+            return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+        }
 }
