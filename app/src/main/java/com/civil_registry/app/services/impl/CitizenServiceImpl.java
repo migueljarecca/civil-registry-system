@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.civil_registry.app.exception.CitizenDniModificationException;
 import com.civil_registry.app.exception.common.ResourceAlreadyExistsException;
 import com.civil_registry.app.exception.common.ResourceNotFoundException;
 import com.civil_registry.app.models.dto.CitizenCreateDto;
@@ -23,9 +22,7 @@ public class CitizenServiceImpl implements ICitizenService {
     @Autowired
     private CitizenRepository citizenRepository;
 
-
     /**
-     *
      * @return List of all citizens
      */
     @Override
@@ -43,8 +40,24 @@ public class CitizenServiceImpl implements ICitizenService {
     }
 
     /**
+     * @param id - input id
+     * @return Citizen details based on a given id
+     */
+    @Override
+    public CitizenResponseDto fetchCitizen(Long id) {
+
+        Citizen citizen = citizenRepository.findById(id).orElseThrow(
+            () -> new ResourceNotFoundException("Citizen", "id", id)
+        );
+
+        CitizenResponseDto citizenResponseDto = CitizenMapper.toCitizenResponseDto(citizen);
+
+        return citizenResponseDto;
+    }
+
+    /**
      *
-     * @param citizen -Citizen Object
+     * @param citizenCreateDto -Citizen Object
      * @return the new citizen details
      */
     @Override
@@ -61,26 +74,6 @@ public class CitizenServiceImpl implements ICitizenService {
         citizenRepository.save(citizen);
     }
 
-
-
-    /**
-     *
-     * @param id - input id
-     * @return Citizen details based on a given id
-     */
-    @Override
-    public CitizenResponseDto fetchCitizen(Long id) {
-
-        Citizen citizen = citizenRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("Citizen", "id", id)
-        );
-
-        CitizenResponseDto citizenResponseDto = CitizenMapper.toCitizenResponseDto(citizen);
-
-        return citizenResponseDto;
-    }
-
-
     /**
      *
      * @param citizenCreateDto - CitizenCreateDto Object
@@ -93,9 +86,16 @@ public class CitizenServiceImpl implements ICitizenService {
             () -> new ResourceNotFoundException("Citizen", "id", id)
         );
 
-        if (!citizen.getDni().equals(citizenCreateDto.getDni())) {
-            throw new CitizenDniModificationException(citizen.getDni());
-}
+        Optional<Citizen> existingCitizen = citizenRepository.findByDni(citizenCreateDto.getDni());
+
+        if (existingCitizen.isPresent() 
+            && !existingCitizen.get().getId().equals(id)) {
+
+                throw new ResourceAlreadyExistsException(
+                    "Citizen with dni " 
+                    + citizenCreateDto.getDni() 
+                    + " already exists");
+        }
 
         CitizenMapper.updateCitizenFromDto(citizen, citizenCreateDto);
 
@@ -116,7 +116,8 @@ public class CitizenServiceImpl implements ICitizenService {
             () -> new ResourceNotFoundException("Citizen", "id", id)
         );
 
-        citizenRepository.deleteById(citizen.getId());
+        citizenRepository.delete(citizen);
+        
         return true;
     }
 

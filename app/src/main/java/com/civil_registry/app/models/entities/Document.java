@@ -3,6 +3,7 @@ package com.civil_registry.app.models.entities;
 import com.civil_registry.app.enums.DocumentStatus;
 import com.civil_registry.app.enums.DocumentType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -36,7 +37,7 @@ public class Document {
     @JoinColumn(name = "citizen_id")
     private Citizen citizen;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "file_document_id")
     private FileDocument fileDocument;
 

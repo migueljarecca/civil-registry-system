@@ -2,6 +2,7 @@ package com.civil_registry.app.services;
 
 import java.util.List;
 
+import com.civil_registry.app.models.dto.document.DocumentCreateDto;
 import com.civil_registry.app.models.dto.document.DocumentResponseDto;
 
 public interface IDocumentService {
@@ -23,7 +24,7 @@ public interface IDocumentService {
     /**
      * @param documentCreateDto - documentCreateDto Object
      */
-    void createDocument(DocumentResponseDto documentCreateDto);
+    void createDocument(DocumentCreateDto documentCreateDto);
 
 
     /**
@@ -31,7 +32,7 @@ public interface IDocumentService {
      * @param documentCreateDto Object
      * @return boolean indicating if the update of document details if successful or not
      */
-    boolean updateDocument(Long id, DocumentResponseDto documentCreateDto);
+    boolean updateDocument(Long id, DocumentCreateDto documentCreateDto);
 
 
     /**

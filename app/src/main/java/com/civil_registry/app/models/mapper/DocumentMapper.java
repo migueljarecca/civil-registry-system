@@ -19,6 +19,16 @@ public class DocumentMapper {
     }   
 
 
+    public static void updateDocumentFromDto(Document document, DocumentCreateDto dto) {
+
+        document.setDocumentNumber(dto.getDocumentNumber());
+        document.setDocumentType(dto.getDocumentType());
+        document.setStatus(dto.getStatus());            
+        document.setDescription(dto.getDescription());
+
+    }
+
+
     public static DocumentResponseDto toDocumentResponseDto(Document document) {
 
         DocumentResponseDto documentResponseDto = new DocumentResponseDto(
