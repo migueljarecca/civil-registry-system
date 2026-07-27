@@ -2,7 +2,6 @@ package com.civil_registry.app.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,41 +17,34 @@ import com.civil_registry.app.constants.CitizenConstants;
 import com.civil_registry.app.models.dto.CitizenCreateDto;
 import com.civil_registry.app.models.dto.CitizenResponseDto;
 import com.civil_registry.app.models.dto.ResponseDto;
-import com.civil_registry.app.services.ICitizenService;
+import com.civil_registry.app.services.CitizenService;
 
 @RestController
 @RequestMapping(path = "/citizens", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class CitizenController {
-    
-    @Autowired
-    private ICitizenService iCitizenService;
+
+    private final CitizenService citizenService;
+
+    public CitizenController(CitizenService iCitizenService) {
+        this.citizenService = iCitizenService;
+    }
+
 
     @GetMapping
     public ResponseEntity<List<CitizenResponseDto>>fetchAllCitizens() {
 
-        List<CitizenResponseDto> citizens = iCitizenService.fetchAllCitizens();
+        List<CitizenResponseDto> citizens = citizenService.fetchAllCitizens();
         
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(citizens);
     }
 
-    @PostMapping
-    public ResponseEntity<ResponseDto>createCitizen(@RequestBody CitizenCreateDto citizenCreateDto) {
-
-        System.out.println("CitizenController.createCitizen: " + citizenCreateDto);
-        
-        iCitizenService.createCitizen(citizenCreateDto);
-
-        return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body(new ResponseDto(CitizenConstants.STATUS_201, CitizenConstants.MESSAGE_201));
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<CitizenResponseDto>fetchCitizen(@PathVariable Long id) {
 
-        CitizenResponseDto citizenResponseDto = iCitizenService.fetchCitizen(id);
+        CitizenResponseDto citizenResponseDto = citizenService.fetchCitizen(id);
 
         return ResponseEntity
             .status(HttpStatus.OK)
@@ -60,10 +52,22 @@ public class CitizenController {
 
     }
 
+    @PostMapping
+    public ResponseEntity<ResponseDto>createCitizen(@RequestBody CitizenCreateDto citizenCreateDto) {
+
+        citizenService.createCitizen(citizenCreateDto);
+
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(new ResponseDto(CitizenConstants.STATUS_201, CitizenConstants.MESSAGE_201));
+    }
+
+
+
     @PutMapping("/{id}")
     public ResponseEntity<ResponseDto>updateCitizen(@PathVariable Long id, @RequestBody CitizenCreateDto citizenCreateDto) {
 
-        boolean isUpdated = iCitizenService.updateCitizen(id, citizenCreateDto);
+        boolean isUpdated = citizenService.updateCitizen(id, citizenCreateDto);
 
         if (isUpdated) {
             return ResponseEntity
@@ -80,7 +84,7 @@ public class CitizenController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseDto>deleteCitizen(@PathVariable Long id) {
 
-        boolean isDeleted = iCitizenService.deleteCitizen(id);
+        boolean isDeleted = citizenService.deleteCitizen(id);
 
         if (isDeleted) {
             return ResponseEntity

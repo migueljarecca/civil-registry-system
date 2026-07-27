@@ -8,5 +8,4 @@ import com.civil_registry.app.models.entities.FileDocument;
 @Repository
 public interface FileDocumentRepository extends JpaRepository<FileDocument, Long> {
     
-
 }

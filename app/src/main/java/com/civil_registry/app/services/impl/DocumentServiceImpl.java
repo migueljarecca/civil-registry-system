@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.civil_registry.app.exception.common.ResourceAlreadyExistsException;
@@ -18,19 +17,22 @@ import com.civil_registry.app.models.mapper.DocumentMapper;
 import com.civil_registry.app.repositories.CitizenRepository;
 import com.civil_registry.app.repositories.DocumentRepository;
 import com.civil_registry.app.repositories.FileDocumentRepository;
-import com.civil_registry.app.services.IDocumentService;
+import com.civil_registry.app.services.DocumentService;
 
 @Service
-public class DocumentServiceImpl implements IDocumentService {
+public class DocumentServiceImpl implements DocumentService {
 
-    @Autowired
-    private DocumentRepository documentRepository;
+    private final DocumentRepository documentRepository;
+    private final CitizenRepository citizenRepository;
+    private final FileDocumentRepository fileDocumentRepository;
 
-    @Autowired
-    private CitizenRepository citizenRepository;
-
-    @Autowired
-    private FileDocumentRepository fileDocumentRepository;
+    public DocumentServiceImpl(DocumentRepository documentRepository, 
+                                CitizenRepository citizenRepository, 
+                                FileDocumentRepository fileDocumentRepository) {
+        this.documentRepository = documentRepository;
+        this.citizenRepository = citizenRepository;
+        this.fileDocumentRepository = fileDocumentRepository;
+    }
 
     /**
      * List of all documents

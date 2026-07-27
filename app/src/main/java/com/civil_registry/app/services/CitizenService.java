@@ -5,7 +5,7 @@ import java.util.List;
 import com.civil_registry.app.models.dto.CitizenCreateDto;
 import com.civil_registry.app.models.dto.CitizenResponseDto;
 
-public interface ICitizenService {
+public interface CitizenService {
 
     /**
      * 

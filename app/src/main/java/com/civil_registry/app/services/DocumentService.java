@@ -5,7 +5,7 @@ import java.util.List;
 import com.civil_registry.app.models.dto.document.DocumentCreateDto;
 import com.civil_registry.app.models.dto.document.DocumentResponseDto;
 
-public interface IDocumentService {
+public interface DocumentService {
     
     /**
      * 

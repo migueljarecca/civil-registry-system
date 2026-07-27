@@ -14,10 +14,10 @@ import com.civil_registry.app.models.dto.CitizenResponseDto;
 import com.civil_registry.app.models.entities.Citizen;
 import com.civil_registry.app.models.mapper.CitizenMapper;
 import com.civil_registry.app.repositories.CitizenRepository;
-import com.civil_registry.app.services.ICitizenService;
+import com.civil_registry.app.services.CitizenService;
 
 @Service
-public class CitizenServiceImpl implements ICitizenService {
+public class CitizenServiceImpl implements CitizenService {
 
     @Autowired
     private CitizenRepository citizenRepository;
