@@ -11,4 +11,6 @@ import com.civil_registry.app.models.entities.Document;
 public interface DocumentRepository extends JpaRepository<Document, Long> {
     
     Optional<Document> findByDocumentNumber(String documentNumber);
+
+    boolean existsByFileDocumentId(Long fileDocumentId);
 }

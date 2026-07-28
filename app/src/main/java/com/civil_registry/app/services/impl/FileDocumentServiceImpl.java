@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.civil_registry.app.exception.common.ResourceNotFoundException;
 import com.civil_registry.app.models.dto.fileDocument.FileDocumentCreateDto;
 import com.civil_registry.app.models.dto.fileDocument.FileDocumentResponseDto;
 import com.civil_registry.app.models.entities.FileDocument;
@@ -40,7 +41,7 @@ public class FileDocumentServiceImpl implements FileDocumentService {
     public FileDocumentResponseDto fetchFileDocument(Long id) {
 
         FileDocument fileDocument = fileDocumentRepository.findById(id).orElseThrow(
-            () -> new RuntimeException("File document not found with id: " + id)
+            () -> new ResourceNotFoundException("FileDocument", "id", id)
         );
 
         FileDocumentResponseDto fileDocumentResponseDto = FileDocumentMapper.toFileDocumentResponseDto(fileDocument);
@@ -62,7 +63,7 @@ public class FileDocumentServiceImpl implements FileDocumentService {
     public boolean updateFileDocument(Long id, FileDocumentCreateDto fileDocumentCreateDto) {
 
         FileDocument fileDocument = fileDocumentRepository.findById(id).orElseThrow(
-            () -> new RuntimeException("File document not found with id: " + id)
+            () -> new ResourceNotFoundException("FileDocument", "id", id)
         );
 
         FileDocumentMapper.updateFileDocumentFromDto(fileDocument, fileDocumentCreateDto);
@@ -76,7 +77,7 @@ public class FileDocumentServiceImpl implements FileDocumentService {
     public boolean deleteFileDocument(Long id) {
 
         FileDocument fileDocument = fileDocumentRepository.findById(id).orElseThrow(
-            () -> new RuntimeException("File document not found with id: " + id)
+            () -> new ResourceNotFoundException("FileDocument", "id", id)
         );
 
         fileDocumentRepository.delete(fileDocument);

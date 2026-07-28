@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.civil_registry.app.exception.common.ResourceAlreadyExistsException;
 import com.civil_registry.app.exception.common.ResourceNotFoundException;
+import com.civil_registry.app.exception.filedocument.FileDocumentAlreadyAssignedException;
 import com.civil_registry.app.models.dto.document.DocumentCreateDto;
 import com.civil_registry.app.models.dto.document.DocumentResponseDto;
 import com.civil_registry.app.models.entities.Citizen;
@@ -89,12 +90,17 @@ public class DocumentServiceImpl implements DocumentService {
                 "Citizen", "id", documentCreateDto.getCitizenId())
         );
 
-        document.setCitizen(citizen);
-
         FileDocument fileDocument = fileDocumentRepository.findById(documentCreateDto.getFileDocumentId()).orElseThrow(
             () -> new ResourceNotFoundException(
                 "FileDocument", "id", documentCreateDto.getFileDocumentId())
         );
+
+        if (documentRepository.existsByFileDocumentId(fileDocument.getId())) {
+            throw new FileDocumentAlreadyAssignedException(
+            "FileDocument", "id", fileDocument.getId());
+}
+
+        document.setCitizen(citizen);
 
         document.setFileDocument(fileDocument);
 
@@ -148,6 +154,11 @@ public class DocumentServiceImpl implements DocumentService {
                     "id", 
                     documentCreateDto.getFileDocumentId())
         );
+
+        if (documentRepository.existsByFileDocumentId(fileDocument.getId())) {
+            throw new FileDocumentAlreadyAssignedException(
+            "FileDocument", "id", fileDocument.getId());
+        }
 
         DocumentMapper.updateDocumentFromDto(document, documentCreateDto);
 

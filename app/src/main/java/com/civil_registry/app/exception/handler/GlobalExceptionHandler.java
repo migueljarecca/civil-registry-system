@@ -11,6 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import com.civil_registry.app.exception.citizen.CitizenDniModificationException;
 import com.civil_registry.app.exception.common.ResourceAlreadyExistsException;
 import com.civil_registry.app.exception.common.ResourceNotFoundException;
+import com.civil_registry.app.exception.filedocument.FileDocumentAlreadyAssignedException;
 import com.civil_registry.app.models.dto.ErrorResponseDto;
 
 @ControllerAdvice
@@ -60,6 +61,21 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
             );
 
-            return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileDocumentAlreadyAssignedException.class)
+    public ResponseEntity<ErrorResponseDto>handleFileDocumentAlreadyAssignedException(
+            FileDocumentAlreadyAssignedException exception,
+            WebRequest webRequest){
+
+            ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                webRequest.getDescription(false),
+                HttpStatus.CONFLICT,
+                exception.getMessage(),
+                LocalDateTime.now()
+            );
+
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.CONFLICT);
+    }
 }
