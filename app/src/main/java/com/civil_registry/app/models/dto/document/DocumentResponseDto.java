@@ -1,5 +1,7 @@
 package com.civil_registry.app.models.dto.document;
 
+import java.time.LocalDateTime;
+
 import com.civil_registry.app.enums.DocumentStatus;
 import com.civil_registry.app.enums.DocumentType;
 
@@ -12,7 +14,12 @@ public record DocumentResponseDto(
     String description,
     
     Long citizenId,
-    Long fileDocumentId
+    Long fileDocumentId,
+
+    LocalDateTime createdAt,
+    String createdBy,
+    LocalDateTime updatedAt,
+    String updatedBy
 
 ) {
 }

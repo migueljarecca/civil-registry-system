@@ -1,6 +1,7 @@
 package com.civil_registry.app.models.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.civil_registry.app.enums.Gender;
 
@@ -11,6 +12,11 @@ public record CitizenResponseDto(
     String fatherLastName,
     String motherLastName,
     LocalDate birthDate,
-    Gender gender
+    Gender gender,
+
+    LocalDateTime createdAt,
+    String createdBy,
+    LocalDateTime updatedAt,
+    String updatedBy
 ) {
 }

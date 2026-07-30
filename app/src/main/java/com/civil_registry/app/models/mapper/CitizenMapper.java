@@ -41,7 +41,12 @@ public class CitizenMapper {
             citizen.getFatherLastName(),
             citizen.getMotherLastName(),
             citizen.getBirthDate(),
-            citizen.getGender()
+            citizen.getGender(),
+
+            citizen.getCreatedAt(),
+            citizen.getCreatedBy(),
+            citizen.getUpdatedAt(),
+            citizen.getUpdatedBy()  
         );
 
         return citizenResponseDto;

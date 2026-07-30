@@ -25,12 +25,15 @@ public class BaseEntity {
     private String createdBy;
 
     @LastModifiedDate
+    @Column(insertable = false)
     private LocalDateTime updatedAt;
 
     @LastModifiedBy
+    @Column(insertable = false)
     private String updatedBy;
 
-    public LocalDateTime getCreateAt() {
+
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -38,7 +41,7 @@ public class BaseEntity {
         return createdBy;
     }
 
-    public LocalDateTime getUpdateAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
@@ -46,16 +49,16 @@ public class BaseEntity {
         return updatedBy;
     }
 
-    public void setCreateAt(LocalDateTime createAt) {
-        this.createdAt = createAt;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 
-    public void setUpdateAt(LocalDateTime updateAt) {
-        this.updatedAt = updateAt;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public void setUpdatedBy(String updatedBy) {

@@ -37,7 +37,12 @@ public class FileDocumentMapper {
             fileDocument.getFileName(),
             fileDocument.getFileUrl(),
             fileDocument.getFileSize(),
-            fileDocument.getContentType()
+            fileDocument.getContentType(),
+
+            fileDocument.getCreatedAt(),
+            fileDocument.getCreatedBy(),
+            fileDocument.getUpdatedAt(),
+            fileDocument.getUpdatedBy()
         );    
 
     }

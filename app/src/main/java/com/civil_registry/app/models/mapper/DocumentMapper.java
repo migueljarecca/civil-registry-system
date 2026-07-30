@@ -39,7 +39,12 @@ public class DocumentMapper {
             document.getDescription(),
 
             document.getCitizen().getId(),
-            document.getFileDocument().getId()
+            document.getFileDocument().getId(),
+
+            document.getCreatedAt(),
+            document.getCreatedBy(),
+            document.getUpdatedAt(),
+            document.getUpdatedBy()
         );
 
         return documentResponseDto;
