@@ -6,7 +6,7 @@ import birth from "../assets/images/birth.png"
 import marriage from "../assets/images/marriage.png"
 import death from "../assets/images/death.png"
 
-export const Home = () => {
+export const HomePage = () => {
 
     return (
         <main className="home-main">

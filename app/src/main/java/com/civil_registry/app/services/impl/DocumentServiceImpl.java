@@ -155,11 +155,6 @@ public class DocumentServiceImpl implements DocumentService {
                     documentCreateDto.getFileDocumentId())
         );
 
-        if (documentRepository.existsByFileDocumentId(fileDocument.getId())) {
-            throw new FileDocumentAlreadyAssignedException(
-            "FileDocument", "id", fileDocument.getId());
-        }
-
         DocumentMapper.updateDocumentFromDto(document, documentCreateDto);
 
         document.setCitizen(citizen);
