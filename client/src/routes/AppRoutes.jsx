@@ -6,8 +6,9 @@ import { AuthLayout } from "../layouts/AuthLayout/AuthLayout"
 import { AuthPage } from "../pages/auth/AuthPage"
 import { Login } from "../components/auth/Login"
 import { NotFound } from "../pages/shared/NotFound"
-import { PublicPage } from "../pages/public/PublicPage"
 import { HomePage } from "../pages/public/HomePage/HomePage"
+import { ServicesPage } from "../pages/public/ServicesPage/ServicesPage"
+import { ContactPage } from "../pages/public/Contact/ContactPage"
 
 
 export const AppRoutes = () => {
@@ -17,8 +18,8 @@ export const AppRoutes = () => {
     <Routes>
         <Route element={<PublicLayout />}>
           <Route path="/" element={<HomePage />} />
-          
-
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/contact" element={<ContactPage />} />
 
         </Route>
 

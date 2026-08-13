@@ -1,10 +1,9 @@
-import { Wave } from "../assets/icons/Icons"
 import { NavLink } from "react-router-dom"
-
-import logoppal from "../assets/images/logo-ppal.png"
-import birth from "../assets/images/birth.png"
-import marriage from "../assets/images/marriage.png"
-import death from "../assets/images/death.png"
+import { Wave } from "../../../assets/icons/Icons"
+import marriage from "../../../assets/images/marriage.png"
+import birth from "../../../assets/images/birth.png"
+import death from "../../../assets/images/death.png"
+import logoppal from "../../../assets/images/logo-ppal.png"
 
 export const HomePage = () => {
 
