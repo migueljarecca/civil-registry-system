@@ -1,0 +1,143 @@
+
+.header {
+    width: 100%;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 4.2rem;
+    padding: 0 12%;
+    background-color: #f5f9fa;
+}
+
+.header-top__info {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.header-top__schedule,
+.header-top__phone {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-top__icon-wrapper {
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
+.header-top__schedule svg, 
+.header-top__phone svg {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.header-top__schedule span,
+.header-top__phone span {
+    font-size: 1.4rem;
+    color: #4a4a4a;
+}
+
+.header-top__social {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-top__social a {
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.header-top__social svg {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1/1;
+    color: #4a4a4a;
+}
+
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 9rem;
+    padding: 0 12%;
+}
+
+.header-main__brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-main__logo-wrapper {
+    width: 4.5rem;
+    height: 4.5rem;
+}
+
+.header-main__logo-wrapper svg {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.header-main__title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4a4a4a;
+}
+
+.header-main__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-main__icon-wrapper {
+    width: 2rem;
+    height: 2rem;
+}
+
+.header-main__icon-wrapper svg {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1/1;
+    color: #4a4a4a;
+}
+
+.header-nav {
+    padding: 0 12%;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header-nav__nav {
+    display: flex;
+    justify-content: start;
+}
+
+.header-main__menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.header-main__item {
+    position: relative;
+}
+
+.header-main__link {
+    display: block;
+    padding: 1.5rem 2rem;
+    font-size: 1.6rem;
+    color: #4a4a4a;
+}
+
+.header-main__item:first-of-type .header-main__link {
+    padding-left: 0;
+}

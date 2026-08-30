@@ -1,0 +1,186 @@
+
+/* ============================================================ */
+/* Public layout */
+/* ============================================================ */
+
+/* home-hero */
+/* ------------------------------------------------------------ */
+
+.home {
+    width: 100%;
+}
+
+.home__hero {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    padding: 8rem 12%;
+    background: linear-gradient(135deg, #1e6fa8 0%, #174168 60%, #0f2e4a 100%);
+}
+
+.home__title {
+    font-size: 4.8rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: -0.5px;
+}
+
+.home__subtitle {
+    font-size: 2rem;
+    font-weight: 300;
+    color: #4a4a6a;
+    letter-spacing: 0.5px;
+}
+
+.home__search {
+    display: flex;
+}
+
+.home__search-form {
+    display: flex;
+    align-items: center;
+    min-width: 50rem;
+    background: #fff;
+}
+
+.home__search-input {
+    flex: 1;
+    width: 100%;
+    padding: 1.2rem 1.6rem;
+    outline: none;
+    border: none;
+    font-size: 1.6rem;
+}
+
+.home__search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    width: 4.8rem;
+    height: 4.8rem;
+}
+
+.home__search-btn svg {
+    width: 2.4rem;
+    height: 2.4rem;
+    aspect-ratio: 1/1;
+}
+
+/* home-quick-access */
+/* ------------------------------------------------------------ */
+
+.home__quick-access {
+    display: flex;
+    flex-direction: column;
+    padding: 8rem 12%;
+}
+
+.home__quick-access-title {
+    color: #174168;
+    font-weight: 600;
+    font-size: 3rem;
+    line-height: 1.35;;
+}
+
+.home__quick-access-grid {
+    display: flex;
+    flex-wrap: wrap;
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
+    gap: 2rem;
+    margin-top: 2rem;
+    list-style: none;
+}
+
+.home__quick-access-item a {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    font-size: 1.6rem;
+    border: 2px solid #0f2e4a;
+}
+
+
+/* home-services */
+/* ------------------------------------------------------------ */
+
+.home__services {
+    background: #efefef;
+    padding: 8rem 12%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.home__services-title {
+    color: #174168;
+    font-weight: 600;
+    font-size: 3rem;
+    line-height: 1.35;
+}
+
+.home__services-grid {
+    display: flex;
+    gap: 2.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.home__services-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    width: 21rem;
+    min-height: 24rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.8rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+    text-decoration: none;
+
+    position: relative;
+}
+
+.home__services-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.13);
+    
+}
+
+.home__services-img-wrapper {
+    width: 6.4rem;
+    height: 6.4rem;
+    margin-bottom: 1.6rem;
+    object-fit: contain;
+}
+
+.home__services-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.home__services-card-text h3 {
+    color: #174168;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 1.35;
+}
+
+.home__services-card-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
