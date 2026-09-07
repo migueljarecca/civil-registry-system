@@ -1,0 +1,63 @@
+
+:root {
+
+/* Font sizes */
+
+    --text-display-lg: 5.7rem;
+    --text-display-md: 4.5rem;
+
+    --text-headline-lg: 3.2rem;
+    --text-headline-md: 2.8rem;
+
+    --text-title-lg: 2.2rem;
+    --text-title-md: 1.6rem;
+
+    --text-body-lg: 1.6rem;
+    --text-body-md: 1.4rem;
+
+    --text-label-lg: 1.4rem;
+    --text-label-md: 1.2rem;
+
+
+/* Line heights */ 
+
+    --leading-display-lg: 6.4rem;
+    --leading-display-md: 5.2rem;
+
+    --leading-headline-lg: 4rem;
+    --leading-headline-md: 3.6rem;
+
+    --leading-title-lg: 2.8rem;
+    --leading-title-md: 2.4rem;
+
+    --leading-body-lg: 2.4rem;
+    --leading-body-md: 2.0rem;
+    
+    --leading-label-lg: 2.0rem;
+    --leading-label-md: 1.6rem;
+
+/* letterSpacing */
+
+    --letter-spacing-display-lg: 0;
+    --letter-spacing-display-md: 0;
+
+    --letter-spacing-headline-lg: 0;
+    --letter-spacing-headline-md: 0;
+
+    --letter-spacing-title-lg: 0;
+    --letter-spacing-title-md: 0;
+
+    --letter-spacing-body-lg: 0;
+    --letter-spacing-body-md: 0;
+    
+    --letter-spacing-label-lg: 0;
+    --letter-spacing-label-md: 0.1em;
+
+/* Font weights */
+
+    --weight-light: 300;
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+}

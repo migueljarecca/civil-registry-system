@@ -39,7 +39,10 @@
 
 .header-top__schedule span,
 .header-top__phone span {
-    font-size: 1.4rem;
+    font-size: var(--text-body-md);
+    line-height: var(--leading-body-md);
+    letter-spacing: var(--letter-spacing-body-md);
+    font-weight: var(--weight-regular);
     color: #4a4a4a;
 }
 
@@ -134,7 +137,13 @@
 .header-main__link {
     display: block;
     padding: 1.5rem 2rem;
-    font-size: 1.6rem;
+
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-body-lg);
+    letter-spacing: var(--letter-spacing-body-lg);
+    font-weight: var(--weight-regular);  
+    
+    font-family: 'Montserrat', sans-serif;
     color: #4a4a4a;
 }
 

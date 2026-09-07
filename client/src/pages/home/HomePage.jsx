@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom"
 import marriage from "../../assets/images/marriage.png"
 import birth from "../../assets/images/birth.png"
 import death from "../../assets/images/death.png"
+import certificate from "../../assets/images/certificate.png"
+
 import { MagnifyingGlass } from "../../assets/icons/Common/Common"
 
 export const HomePage = () => {
@@ -105,7 +107,7 @@ export const HomePage = () => {
                     <div className="home__services-card">
                         <NavLink to="/deaths" className="home__services-card-link"></NavLink>
                         <div className="home__services-img-wrapper">
-                            <img src={death} alt="Death Certificate" />
+                            <img src={certificate} alt="Death Certificate" />
                         </div>
                         <div className="home__services-card-text">
                             <h3>Certificados</h3>

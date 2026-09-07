@@ -19,17 +19,22 @@
 }
 
 .home__title {
-    font-size: 4.8rem;
+    font-size: var(--text-display-md);
+    line-height: var(--leading-display-md);
+    letter-spacing: var(--letter-spacing-display-md);
     font-weight: 700;
     color: #1a1a2e;
-    letter-spacing: -0.5px;
+
+
 }
 
 .home__subtitle {
-    font-size: 2rem;
-    font-weight: 300;
+    font-size: var(--text-headline-md);
+    line-height: var(--leading-headline-md);
+    letter-spacing: var(--letter-spacing-headline-md);
+    font-weight: var(--weight-regular);
     color: #4a4a6a;
-    letter-spacing: 0.5px;
+
 }
 
 .home__search {
@@ -49,7 +54,13 @@
     padding: 1.2rem 1.6rem;
     outline: none;
     border: none;
-    font-size: 1.6rem;
+
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-body-lg);
+    letter-spacing: var(--letter-spacing-body-lg);
+    font-weight: var(--weight-regular);
+
+    font-family: 'Open Sans', sans-serif;
 }
 
 .home__search-btn {
@@ -78,10 +89,11 @@
 }
 
 .home__quick-access-title {
+    font-size: var(--text-headline-lg);
+    line-height: var(--leading-headline-lg);
+    letter-spacing: var(--letter-spacing-headline-lg);
+    font-weight: var(--weight-medium);
     color: #174168;
-    font-weight: 600;
-    font-size: 3rem;
-    line-height: 1.35;;
 }
 
 .home__quick-access-grid {
@@ -98,8 +110,15 @@
     display: flex;
     justify-content: center;
     padding: 1rem 2.5rem;
-    font-size: 1.6rem;
     border: 2px solid #0f2e4a;
+
+    font-size: var(--text-title-md);
+    line-height: var(--leading-title-md);
+    letter-spacing: var(--letter-spacing-title-md);
+    font-weight: var(--weight-regular);
+
+    color: #4a4a4a;
+    font-family: 'Poppins', sans-serif;
 }
 
 
@@ -115,10 +134,11 @@
 }
 
 .home__services-title {
+    font-size: var(--text-headline-lg);
+    line-height: var(--leading-headline-lg);
+    letter-spacing: var(--letter-spacing-headline-lg);
+    font-weight: var(--weight-medium);
     color: #174168;
-    font-weight: 600;
-    font-size: 3rem;
-    line-height: 1.35;
 }
 
 .home__services-grid {
@@ -169,10 +189,12 @@
 }
 
 .home__services-card-text h3 {
-    color: #174168;
-    font-weight: 600;
-    font-size: 2rem;
-    line-height: 1.35;
+    font-size: var(--text-title-md);
+    line-height: var(--leading-title-md);
+    letter-spacing: var(--letter-spacing-title-md);
+    font-weight: var(--weight-regular);
+
+    font-family: 'Poppins', sans-serif;
 }
 
 .home__services-card-link {

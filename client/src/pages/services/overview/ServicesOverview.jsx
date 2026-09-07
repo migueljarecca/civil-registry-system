@@ -3,6 +3,8 @@ import { ChevronRight } from "../../../assets/icons/navigation/Navigation"
 import birth from "../../../assets/images/birth.png"
 import marriage from "../../../assets/images/marriage.png"
 import death from "../../../assets/images/death.png"
+import certificate from "../../../assets/images/certificate.png"
+
 import "./ServicesOverview.css"
 
 export const ServicesOverview = () => {
@@ -43,8 +45,8 @@ export const ServicesOverview = () => {
                     </div>
                     <div className="service-card_content">
                         <div className="service-card__header">
-                            <h3 className="service-card__title">Nacimiento</h3>
-                            <p className="service-card__description">Inscripción y registro de nacimientos.</p>
+                            <h3 className="service-card__title">Matrimonio</h3>
+                            <p className="service-card__description">Información sobre el registro de matrimonios.</p>
                         </div>
 
                         <Link className="service-card__link">
@@ -59,8 +61,8 @@ export const ServicesOverview = () => {
                     </div>
                     <div className="service-card_content">
                         <div className="service-card__header">
-                            <h3 className="service-card__title">Nacimiento</h3>
-                            <p className="service-card__description">Inscripción y registro de nacimientos.</p>
+                            <h3 className="service-card__title">Defunción</h3>
+                            <p className="service-card__description">Registro de defunciones.</p>
                         </div>
 
                         <Link className="service-card__link">
@@ -71,12 +73,12 @@ export const ServicesOverview = () => {
                 </article>
                <article className="service-card">
                     <div className="service-card__image">
-                        <img src={birth} alt="Birth Certificate" />
+                        <img src={certificate} alt="Birth Certificate" />
                     </div>
                     <div className="service-card_content">
                         <div className="service-card__header">
-                            <h3 className="service-card__title">Nacimiento</h3>
-                            <p className="service-card__description">Inscripción y registro de nacimientos.</p>
+                            <h3 className="service-card__title">Certificados</h3>
+                            <p className="service-card__description">Solicitud y emisión de certificados y copias.</p>
                         </div>
 
                         <Link className="service-card__link">
