@@ -10,9 +10,12 @@
 }
 
 .services__title {
+    font-size: var(--text-display-md);
+    line-height: var(--leading-display-md);
+    letter-spacing: var(--letter-spacing-display-md);
+    font-weight: var(--weight-bold);
+
     color: #fff;
-    font-size: 4.5rem;
-    font-weight: 700;
 }
 
 .services__content {
@@ -39,10 +42,21 @@
 .services__link {
     display: block;
     padding: 0.7rem 1rem;
-    font-size: 1.6rem;
+    
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-body-lg);
+    letter-spacing: var(--letter-spacing-body-lg);
+    font-weight: var(--weight-regular);  
+    
+    font-family: 'Montserrat', sans-serif;
+    color: #4a4a4a;
+}
+
+.services__link.active {
+    background-color: #1e6fa8;
+    color: #fff;
 }
 
 .services__main {
     flex: 1;
-
 }

@@ -1,108 +1,114 @@
 
-.services-overview {
+.overview-service {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: var(--section-gap);
 }
 
-.services-overview__header {
+.overview-service__section {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: var(--content-gap);
 }
 
-.services-overview__title {
-    font-size: 3rem;
-    font-weight: 600;
+.overview-service__title {
+    font-size: var(--text-headline-md);
+    line-height: var(--leading-headline-md);
+    letter-spacing: var(--letter-spacing-headline-md);
+    font-weight: var(--weight-medium);
 }
 
-.services-overview__description {
-    font-size: 2rem;
+.overview-service__description {
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-body-lg);
+    letter-spacing: var(--letter-spacing-body-lg);
+    font-weight: var(--weight-light);
+
+    color: #101E37;
 }
 
-.services-overview__container {
+.overview-service__subtitle {
+    font-size: var(--text-title-lg);
+    line-height: var(--leading-title-lg);
+    letter-spacing: var(--letter-spacing-title-lg);
+    font-weight: var(--weight-medium);
+}
+
+.overview-service__container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin: 2rem 0;
-}
-
-.service-card {
-    display: flex;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
-    overflow: hidden;
+}
+
+.overview-service__card {
+    display: flex;
     align-items: center;
-    padding: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    gap: var(--card-gap);
+    padding: var(--card-padding);
+    border: var(--card-border-width) solid #d9e1e5;
+    border-radius: var(--card-shape);
 }
 
-.service-card:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    transform: translateY(-4px);
-}
-
-.service-card__image {
-    flex: 0 0 5rem;
-    height: auto;
+.overview-service__card-image {
+    width: 7rem;
+    height: 7rem;
     overflow: hidden;
 }
 
-.service-card__image img {
+.overview-service__card-image img {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
-.service-card_content {
-    flex: 1;
+.overview-service__card-content {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: var(--space-100);
+    height: 100%;
+    width: 100%;
 }
 
-.service-card__title {
-    font-size: 2rem;
-    font-weight: 600;
-    color: #1a2a3a;
-    margin: 0 0 0.375rem 0;
-    line-height: 1.3;
+.overview-service__card-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-100);
 }
 
-.service-card_content {
-    font-size: 1.6rem;
-    color: #5a6a7a;
-    line-height: 1.5;
+.overview-service__card-title {
+    font-size: var(--text-title-md);
+    line-height: var(--leading-title-md);
+    letter-spacing: var(--letter-spacing-title-md);
+    font-weight: var(--weight-regular);    
 }
 
-.service-card__link {
+.overview-service__card-description {
+    font-size: var(--text-body-md);
+    line-height: var(--leading-body-md);
+    letter-spacing: var(--letter-spacing-body-md);
+    font-weight: var(--weight-light);    
+}
+
+.overview-service__card-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 1.6rem;
-    font-weight: 500;
-    color: #0057b3;
+    gap: var(--space-100);
+    width: fit-content;
 
-    transition: color 0.2s ease, gap 0.2s ease;
-    align-self: flex-start;
+    margin-top: auto;
+    align-self: flex-end;
 }
 
-.service-card__link:hover {
-    color: #003d7a;
-    gap: 0.75rem;
+.overview-service__card-link span {
+    font-size: var(--text-label-lg);
+    line-height: var(--leading-label-lg);
+    font-weight: var(--weight-medium); 
 }
 
-.service-card__link svg {
-    width: 2rem;
-    height: 2rem;
+.overview-service__card-link svg {
+    width: 1.4rem;
+    height: 1.4rem;
     flex-shrink: 0;
-
-    transition: transform 0.2s ease;
 }
-
-.service-card__link:hover svg {
-    transform: translateX(2px);
-}
-

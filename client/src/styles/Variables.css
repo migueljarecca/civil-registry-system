@@ -1,4 +1,47 @@
 
 :root {
     --color-primary: #00ffff;
+
+/* Shape */
+    --shape-sm: 8px;
+    --shape-md: 12px;
+    --shape-lg: 16px;
+
+
+/* Border */
+    --border-width-thin: 1px;
+    --border-width-medium: 2px;
+    --border-width-large: 4px;
+
+/* Space */
+    --space-100: 8px;
+    --space-125: 10px;
+    --space-150: 12px;
+    /* --space-175: 14px; */
+    /* --space-200: 16px; */
+    /* --space-225: 18px; */
+    --space-250: 20px;
+    /* --space-300: 24px; */
+    --space-400: 32px;
+    /* --space-500: 40px; */
+    /* --space-600: 48px; */
+    /* --space-800: 64px; */
+
+/* ============================================================ */
+/* card */
+/* ============================================================ */
+    
+/* Component tokens */
+    --card-padding: var(--space-150);
+    --card-gap: var(--space-150);
+    --card-shape: var(--shape-md);
+    --card-border-width: var(--border-width-thin);
+
+/* Section */
+    --section-gap: var(--space-400);
+
+/* Content */
+    --content-gap: var(--space-250);    
 }
+
+

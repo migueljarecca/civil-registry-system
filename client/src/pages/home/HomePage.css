@@ -24,8 +24,6 @@
     letter-spacing: var(--letter-spacing-display-md);
     font-weight: 700;
     color: #1a1a2e;
-
-
 }
 
 .home__subtitle {
@@ -34,7 +32,6 @@
     letter-spacing: var(--letter-spacing-headline-md);
     font-weight: var(--weight-regular);
     color: #4a4a6a;
-
 }
 
 .home__search {
