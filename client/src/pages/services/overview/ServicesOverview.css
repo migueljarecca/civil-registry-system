@@ -34,6 +34,8 @@
     font-weight: var(--weight-medium);
 }
 
+/* card */
+
 .overview-service__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -44,19 +46,21 @@
     display: flex;
     align-items: center;
 
+    position: relative;
+
     gap: var(--card-gap);
     padding: var(--card-padding);
     border: var(--card-border-width) solid #d9e1e5;
     border-radius: var(--card-shape);
 }
 
-.overview-service__card-image {
+.overview-service__card-img {
     width: 7rem;
     height: 7rem;
     overflow: hidden;
 }
 
-.overview-service__card-image img {
+.overview-service__card-img img {
     display: block;
     width: 100%;
     height: 100%;
@@ -71,44 +75,25 @@
     width: 100%;
 }
 
-.overview-service__card-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-100);
-}
-
 .overview-service__card-title {
     font-size: var(--text-title-md);
     line-height: var(--leading-title-md);
     letter-spacing: var(--letter-spacing-title-md);
-    font-weight: var(--weight-regular);    
+    font-weight: var(--weight-medium);
 }
 
 .overview-service__card-description {
-    font-size: var(--text-body-md);
-    line-height: var(--leading-body-md);
-    letter-spacing: var(--letter-spacing-body-md);
-    font-weight: var(--weight-light);    
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-body-lg);
+    letter-spacing: var(--letter-spacing-body-lg);
+    font-weight: var(--weight-light);
 }
 
 .overview-service__card-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-100);
-    width: fit-content;
-
-    margin-top: auto;
-    align-self: flex-end;
-}
-
-.overview-service__card-link span {
-    font-size: var(--text-label-lg);
-    line-height: var(--leading-label-lg);
-    font-weight: var(--weight-medium); 
-}
-
-.overview-service__card-link svg {
-    width: 1.4rem;
-    height: 1.4rem;
-    flex-shrink: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
 }

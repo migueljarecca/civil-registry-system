@@ -93,6 +93,10 @@
     color: #101E37;
 }
 
+.birth-service__requirements-item svg {
+    flex-shrink: 0;
+}
+
 /* notice */
 
 .birth-service__notice {

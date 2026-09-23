@@ -1,6 +1,6 @@
 
 /* ============================================================ */
-/* Public layout */
+/* Home page */
 /* ============================================================ */
 
 /* home-hero */
@@ -76,49 +76,6 @@
     aspect-ratio: 1/1;
 }
 
-/* home-quick-access */
-/* ------------------------------------------------------------ */
-
-.home__quick-access {
-    display: flex;
-    flex-direction: column;
-    padding: 8rem 12%;
-}
-
-.home__quick-access-title {
-    font-size: var(--text-headline-lg);
-    line-height: var(--leading-headline-lg);
-    letter-spacing: var(--letter-spacing-headline-lg);
-    font-weight: var(--weight-medium);
-    color: #174168;
-}
-
-.home__quick-access-grid {
-    display: flex;
-    flex-wrap: wrap;
-    /* display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
-    gap: 2rem;
-    margin-top: 2rem;
-    list-style: none;
-}
-
-.home__quick-access-item a {
-    display: flex;
-    justify-content: center;
-    padding: 1rem 2.5rem;
-    border: 2px solid #0f2e4a;
-
-    font-size: var(--text-title-md);
-    line-height: var(--leading-title-md);
-    letter-spacing: var(--letter-spacing-title-md);
-    font-weight: var(--weight-regular);
-
-    color: #4a4a4a;
-    font-family: 'Poppins', sans-serif;
-}
-
-
 /* home-services */
 /* ------------------------------------------------------------ */
 
@@ -128,70 +85,70 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: var(--content-gap);
 }
 
 .home__services-title {
-    font-size: var(--text-headline-lg);
-    line-height: var(--leading-headline-lg);
-    letter-spacing: var(--letter-spacing-headline-lg);
+    font-size: var(--text-headline-md);
+    line-height: var(--leading-headline-md);
+    letter-spacing: var(--letter-spacing-headline-md);
     font-weight: var(--weight-medium);
     color: #174168;
-}
+}    
 
-.home__services-grid {
-    display: flex;
-    gap: 2.8rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    margin-top: 2rem;
+/* card */
+
+.home__services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
 }
 
 .home__services-card {
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-    width: 21rem;
-    min-height: 24rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 3rem 1.8rem;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    text-align: center;
-    text-decoration: none;
 
     position: relative;
+
+    gap: var(--card-gap);
+    padding: var(--card-padding);
+    border: var(--card-border-width) solid #d9e1e5;
+    border-radius: var(--card-shape); 
 }
 
-.home__services-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.13);
-    
+.home__services-card-img {
+    width: 7rem;
+    height: 7rem;
+    overflow: hidden;
 }
 
-.home__services-img-wrapper {
-    width: 6.4rem;
-    height: 6.4rem;
-    margin-bottom: 1.6rem;
-    object-fit: contain;
-}
-
-.home__services-img-wrapper img {
+.home__services-card-img img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-.home__services-card-text h3 {
+.home__services-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-100);
+    height: 100%;
+    width: 100%;
+}
+
+.home__services-card-title {
     font-size: var(--text-title-md);
     line-height: var(--leading-title-md);
     letter-spacing: var(--letter-spacing-title-md);
-    font-weight: var(--weight-regular);
+    font-weight: var(--weight-medium); 
+}
 
-    font-family: 'Poppins', sans-serif;
+.home__services-card-description {
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-body-lg);
+    letter-spacing: var(--letter-spacing-body-lg);
+    font-weight: var(--weight-light);    
 }
 
 .home__services-card-link {
@@ -200,6 +157,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 2;
 }
+
 

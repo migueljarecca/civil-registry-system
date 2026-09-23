@@ -3,7 +3,7 @@ import "./Header.css"
 import { Clock, Cog8Tooth, Phone, User } from "../../../assets/icons/Common/Common"
 import { Logo } from "../../../assets/icons/Logo/Logo"
 import { Facebook, Twitter } from "../../../assets/icons/Social/Social"
-import { NavLink } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom"
 
 export const Header = () => {
 
@@ -43,6 +43,7 @@ export const Header = () => {
 
             <div className="header-main">
                 <div className="header-main__brand">
+                    <Link to="/" className="header-main__brand-link"></Link>
                     <div className="header-main__logo-wrapper">
                         <Logo />
                     </div>
