@@ -60,7 +60,7 @@ public class DocumentServiceImpl implements DocumentService {
     public DocumentResponseDto fetchDocument(Long id) {
 
         Document document = documentRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("Document", "id", id)
+            () -> new ResourceNotFoundException("Document", "id", String.valueOf(id))
         );
 
         DocumentResponseDto documentResponseDto = DocumentMapper.toDocumentResponseDto(document);
@@ -87,12 +87,12 @@ public class DocumentServiceImpl implements DocumentService {
 
         Citizen citizen = citizenRepository.findById(documentCreateDto.getCitizenId()).orElseThrow(
             () -> new ResourceNotFoundException(
-                "Citizen", "id", documentCreateDto.getCitizenId())
+                "Citizen", "id", String.valueOf(documentCreateDto.getCitizenId()))
         );
 
         FileDocument fileDocument = fileDocumentRepository.findById(documentCreateDto.getFileDocumentId()).orElseThrow(
             () -> new ResourceNotFoundException(
-                "FileDocument", "id", documentCreateDto.getFileDocumentId())
+                "FileDocument", "id", String.valueOf(documentCreateDto.getFileDocumentId()))
         );
 
         if (documentRepository.existsByFileDocumentId(fileDocument.getId())) {
@@ -120,7 +120,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         Document document = documentRepository.findById(id)
             .orElseThrow(() -> 
-                new ResourceNotFoundException("Document", "id", id)
+                new ResourceNotFoundException("Document", "id", String.valueOf(id))
         );
 
         Optional<Document> existingDocument = 
@@ -144,7 +144,7 @@ public class DocumentServiceImpl implements DocumentService {
                 new ResourceNotFoundException(
                     "Citizen", 
                     "id", 
-                    documentCreateDto.getCitizenId())
+                    String.valueOf(documentCreateDto.getCitizenId()))
         );
 
         FileDocument fileDocument = fileDocumentRepository.findById(documentCreateDto.getFileDocumentId())
@@ -152,7 +152,7 @@ public class DocumentServiceImpl implements DocumentService {
                 new ResourceNotFoundException(
                     "FileDocument", 
                     "id", 
-                    documentCreateDto.getFileDocumentId())
+                    String.valueOf(documentCreateDto.getFileDocumentId()))
         );
 
         DocumentMapper.updateDocumentFromDto(document, documentCreateDto);
@@ -169,7 +169,7 @@ public class DocumentServiceImpl implements DocumentService {
     public boolean deleteDocument(Long id) {
 
         Document document = documentRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("Document", "id", id)
+            () -> new ResourceNotFoundException("Document", "id", String.valueOf(id))
         );
 
         documentRepository.delete(document);

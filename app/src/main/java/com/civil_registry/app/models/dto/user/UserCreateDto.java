@@ -4,15 +4,17 @@ public class UserCreateDto {
     
     private String name;
     private String lastname;
+    private String dni;
     private String email;
     private String password;
     
     public UserCreateDto() {
     }
 
-    public UserCreateDto(String name, String lastname, String email, String password) {
+    public UserCreateDto(String name, String lastname, String dni, String email, String password) {
         this.name = name;
         this.lastname = lastname;
+        this.dni = dni;
         this.email = email;
         this.password = password;
     }
@@ -33,6 +35,14 @@ public class UserCreateDto {
         this.lastname = lastname;
     }
 
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -51,7 +61,8 @@ public class UserCreateDto {
 
     @Override
     public String toString() {
-        return "UserCreateDto [name=" + name + ", lastname=" + lastname + ", email=" + email + ", password=" + password
-                + "]";
+        return "UserCreateDto [name=" + name + ", lastname=" + lastname + ", dni=" + dni + ", email=" + email
+                + ", password=" + password + "]";
     }
+
 }

@@ -41,7 +41,7 @@ public class FileDocumentServiceImpl implements FileDocumentService {
     public FileDocumentResponseDto fetchFileDocument(Long id) {
 
         FileDocument fileDocument = fileDocumentRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("FileDocument", "id", id)
+            () -> new ResourceNotFoundException("FileDocument", "id", String.valueOf(id))
         );
 
         FileDocumentResponseDto fileDocumentResponseDto = FileDocumentMapper.toFileDocumentResponseDto(fileDocument);
@@ -63,7 +63,7 @@ public class FileDocumentServiceImpl implements FileDocumentService {
     public boolean updateFileDocument(Long id, FileDocumentCreateDto fileDocumentCreateDto) {
 
         FileDocument fileDocument = fileDocumentRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("FileDocument", "id", id)
+            () -> new ResourceNotFoundException("FileDocument", "id", String.valueOf(id))
         );
 
         FileDocumentMapper.updateFileDocumentFromDto(fileDocument, fileDocumentCreateDto);
@@ -77,7 +77,7 @@ public class FileDocumentServiceImpl implements FileDocumentService {
     public boolean deleteFileDocument(Long id) {
 
         FileDocument fileDocument = fileDocumentRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("FileDocument", "id", id)
+            () -> new ResourceNotFoundException("FileDocument", "id", String.valueOf(id))
         );
 
         fileDocumentRepository.delete(fileDocument);

@@ -31,13 +31,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ResourceAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponseDto>handleCitizenAlreadyExistsException(
+    public ResponseEntity<ErrorResponseDto>handleResourceAlreadyExistsException(
             ResourceAlreadyExistsException exception,
             WebRequest webRequest){
 
             ErrorResponseDto errorResponseDto = new ErrorResponseDto(
                 webRequest.getDescription(false),
-                HttpStatus.BAD_REQUEST,
+                HttpStatus.CONFLICT,
                 exception.getMessage(),
                 LocalDateTime.now()
             );

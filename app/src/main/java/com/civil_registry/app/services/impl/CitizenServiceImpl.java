@@ -47,7 +47,7 @@ public class CitizenServiceImpl implements CitizenService {
     public CitizenResponseDto fetchCitizen(Long id) {
 
         Citizen citizen = citizenRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("Citizen", "id", id)
+            () -> new ResourceNotFoundException("Citizen", "id", String.valueOf(id))
         );
 
         CitizenResponseDto citizenResponseDto = CitizenMapper.toCitizenResponseDto(citizen);
@@ -83,7 +83,7 @@ public class CitizenServiceImpl implements CitizenService {
     public boolean updateCitizen(Long id, CitizenCreateDto citizenCreateDto) {
         
         Citizen citizen = citizenRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("Citizen", "id", id)
+            () -> new ResourceNotFoundException("Citizen", "id", String.valueOf(id))
         );
 
         Optional<Citizen> existingCitizen = citizenRepository.findByDni(citizenCreateDto.getDni());
@@ -113,7 +113,7 @@ public class CitizenServiceImpl implements CitizenService {
     public boolean deleteCitizen(Long id) {
 
         Citizen citizen = citizenRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("Citizen", "id", id)
+            () -> new ResourceNotFoundException("Citizen", "id", String.valueOf(id))
         );
 
         citizenRepository.delete(citizen);
