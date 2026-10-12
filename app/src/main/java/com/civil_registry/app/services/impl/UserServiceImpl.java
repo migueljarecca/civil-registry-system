@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.civil_registry.app.exception.common.ResourceAlreadyExistsException;
@@ -23,10 +24,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -81,6 +84,8 @@ public class UserServiceImpl implements UserService {
     public void createUser(UserCreateDto userCreateDto) {
 
         User user = UserMapper.createUserFromDto(userCreateDto);
+        user.setPassword(passwordEncoder.encode(userCreateDto.getPassword()));
+        user.setEnabled(true);
 
         validateDniNotTaken(user.getDni(), null);
         validateEmailNotTaken(user.getEmail(), null);
@@ -117,6 +122,10 @@ public class UserServiceImpl implements UserService {
         validateEmailNotTaken(userCreateDto.getEmail(), id);                       
 
         UserMapper.updateUserFromDto(user, userCreateDto);
+
+        if (userCreateDto.getPassword() != null && !userCreateDto.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(userCreateDto.getPassword()));
+        }
         
         userRepository.save(user);
 

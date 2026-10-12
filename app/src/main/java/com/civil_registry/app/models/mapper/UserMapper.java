@@ -19,7 +19,6 @@ public class UserMapper {
         user.setLastname(userCreateDto.getLastname());
         user.setDni(userCreateDto.getDni());
         user.setEmail(userCreateDto.getEmail());
-        user.setPassword(userCreateDto.getPassword());
 
         return user;
     }
@@ -31,8 +30,6 @@ public class UserMapper {
         user.setLastname(dto.getLastname());
         user.setDni(dto.getDni());
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
-
     }
     
     
