@@ -84,11 +84,15 @@ public class UserServiceImpl implements UserService {
     public void createUser(UserCreateDto userCreateDto) {
 
         User user = UserMapper.createUserFromDto(userCreateDto);
+
+        String normalizedEmail = normalizeEmail(userCreateDto.getEmail());
+
+        user.setEmail(normalizedEmail);
         user.setPassword(passwordEncoder.encode(userCreateDto.getPassword()));
         user.setEnabled(true);
 
         validateDniNotTaken(user.getDni(), null);
-        validateEmailNotTaken(user.getEmail(), null);
+        validateEmailNotTaken(normalizedEmail, null);
 
         Role existingRole = roleRepository.findByRolName("ROLE_USER")
                 .orElseThrow(() -> 
@@ -113,15 +117,18 @@ public class UserServiceImpl implements UserService {
      */  
     @Override
     public void updateUser(Long id, UserCreateDto userCreateDto) {
+
+        String normalizedEmail = normalizeEmail(userCreateDto.getEmail());
         
         User user = userRepository.findById(id)
                 .orElseThrow(() -> 
                         new ResourceNotFoundException("User", "id", String.valueOf(id)));
 
         validateDniNotTaken(userCreateDto.getDni(), id);
-        validateEmailNotTaken(userCreateDto.getEmail(), id);                       
+        validateEmailNotTaken(normalizedEmail, id);                       
 
         UserMapper.updateUserFromDto(user, userCreateDto);
+        user.setEmail(normalizedEmail);
 
         if (userCreateDto.getPassword() != null && !userCreateDto.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(userCreateDto.getPassword()));
@@ -177,6 +184,11 @@ public class UserServiceImpl implements UserService {
 
         });
     }  
+
+
+    private String normalizeEmail(String email) {
+        return email == null ? null : email.toLowerCase().trim();
+    }
 
 }
 
