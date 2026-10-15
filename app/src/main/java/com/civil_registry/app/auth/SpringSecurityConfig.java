@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.civil_registry.app.auth.filters.JwtAuthenticationFilter;
 import com.civil_registry.app.auth.filters.JwtAuthorizationFilter;
+import com.civil_registry.app.auth.handlers.JwtAuthenticationEntryPoint;
 import com.civil_registry.app.auth.services.JwtService;
 
 
@@ -26,13 +27,16 @@ public class SpringSecurityConfig {
 
     private final JwtService jwtService;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final AuthenticationConfiguration authenticationConfiguration;
 
     public SpringSecurityConfig(JwtService jwtService,
                                 JwtAuthorizationFilter jwtAuthorizationFilter,
+                                JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
                                 AuthenticationConfiguration authenticationConfiguration) {
         this.jwtService = jwtService;
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.authenticationConfiguration = authenticationConfiguration;
     }
     
@@ -48,6 +52,10 @@ public class SpringSecurityConfig {
 
             .sessionManagement(session -> 
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+            .exceptionHandling(exception -> exception
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            )    
 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login").permitAll()
