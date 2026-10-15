@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -20,6 +21,7 @@ import com.civil_registry.app.auth.services.JwtService;
 
 @Configuration
 @EnableWebSecurity 
+@EnableMethodSecurity 
 public class SpringSecurityConfig {
 
     private final JwtService jwtService;
@@ -49,8 +51,11 @@ public class SpringSecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login").permitAll()
+
                 .requestMatchers(HttpMethod.POST, "/users").permitAll()
-                
+                .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
+
                 .anyRequest().authenticated()
             )
             

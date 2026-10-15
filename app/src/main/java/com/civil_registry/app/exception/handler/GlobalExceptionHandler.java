@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -17,18 +18,30 @@ import com.civil_registry.app.models.dto.ErrorResponseDto;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDto>handleGlobalException(Exception exception, WebRequest webRequest){
+
+    // ==========================================
+    // Security exceptions
+    // ==========================================
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponseDto> handleAccessDeniedException(
+            AccessDeniedException exception,
+            WebRequest webRequest) {
 
         ErrorResponseDto errorResponseDto = new ErrorResponseDto(
-            webRequest.getDescription(false),
-            HttpStatus.INTERNAL_SERVER_ERROR,
-            exception.getMessage(),
-            LocalDateTime.now()
+                webRequest.getDescription(false),
+                HttpStatus.FORBIDDEN,
+                "Access denied: you don't have permission to access this resource",
+                LocalDateTime.now()
         );
 
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.FORBIDDEN);
     }
+
+
+    // ==========================================
+    // Common resource exceptions
+    // ==========================================
 
     @ExceptionHandler(ResourceAlreadyExistsException.class)
     public ResponseEntity<ErrorResponseDto>handleResourceAlreadyExistsException(
@@ -42,10 +55,9 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
             );
 
-            return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(errorResponseDto, HttpStatus.CONFLICT);
         }
     
-
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponseDto>handleResourceNotFoundException(
             ResourceNotFoundException exception,
@@ -61,7 +73,11 @@ public class GlobalExceptionHandler {
             return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
         }
        
-        
+
+    // ==========================================
+    // Citizen exceptions
+    // ==========================================    
+
     @ExceptionHandler(CitizenDniModificationException.class)
     public ResponseEntity<ErrorResponseDto>handleCitizenDniModificationException(
             CitizenDniModificationException exception,
@@ -77,6 +93,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
     }
 
+
+    // ==========================================
+    // FileDocument exceptions
+    // ==========================================
+
     @ExceptionHandler(FileDocumentAlreadyAssignedException.class)
     public ResponseEntity<ErrorResponseDto>handleFileDocumentAlreadyAssignedException(
             FileDocumentAlreadyAssignedException exception,
@@ -91,4 +112,22 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorResponseDto, HttpStatus.CONFLICT);
     }
+
+    // ==========================================
+    // Fallback handler
+    // ==========================================
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponseDto>handleGlobalException(Exception exception, WebRequest webRequest){
+
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+            webRequest.getDescription(false),
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            exception.getMessage(),
+            LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
