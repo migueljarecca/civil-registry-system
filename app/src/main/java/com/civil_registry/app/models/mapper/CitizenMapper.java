@@ -1,7 +1,7 @@
 package com.civil_registry.app.models.mapper;
 
-import com.civil_registry.app.models.dto.CitizenCreateDto;
-import com.civil_registry.app.models.dto.CitizenResponseDto;
+import com.civil_registry.app.models.dto.citizen.CitizenCreateDto;
+import com.civil_registry.app.models.dto.citizen.CitizenResponseDto;
 import com.civil_registry.app.models.entities.Citizen;
 
 public class CitizenMapper {

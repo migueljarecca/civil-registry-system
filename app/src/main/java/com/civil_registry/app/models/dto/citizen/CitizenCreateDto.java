@@ -1,4 +1,4 @@
-package com.civil_registry.app.models.dto;
+package com.civil_registry.app.models.dto.citizen;
 
 import java.time.LocalDate;
 

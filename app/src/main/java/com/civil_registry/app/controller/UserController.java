@@ -21,6 +21,8 @@ import com.civil_registry.app.models.dto.user.UserCreateDto;
 import com.civil_registry.app.models.dto.user.UserResponseDto;
 import com.civil_registry.app.services.UserService;
 
+import jakarta.validation.Valid;
+
 
 @RestController 
 @RequestMapping (path = "/users", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -57,7 +59,7 @@ public class UserController {
 
 
     @PostMapping 
-    public ResponseEntity<ResponseDto> createUser(@RequestBody UserCreateDto userCreateDto) {
+    public ResponseEntity<ResponseDto> createUser(@Valid @RequestBody UserCreateDto userCreateDto) {
         
         userService.createUser(userCreateDto);
         
@@ -69,7 +71,8 @@ public class UserController {
 
     @PutMapping ("/{id}")
     @PreAuthorize("#id == authentication.principal.user.id or hasRole('ADMIN')")
-    public ResponseEntity<ResponseDto> updateUser(@PathVariable Long id, @RequestBody UserCreateDto userCreateDto) {
+    public ResponseEntity<ResponseDto> updateUser(@PathVariable Long id, 
+                                                    @Valid @RequestBody UserCreateDto userCreateDto) {
         
         userService.updateUser(id, userCreateDto);
 

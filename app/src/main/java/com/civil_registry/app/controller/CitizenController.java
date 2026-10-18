@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.civil_registry.app.constants.CitizenConstants;
-import com.civil_registry.app.models.dto.CitizenCreateDto;
-import com.civil_registry.app.models.dto.CitizenResponseDto;
 import com.civil_registry.app.models.dto.ResponseDto;
+import com.civil_registry.app.models.dto.citizen.CitizenCreateDto;
+import com.civil_registry.app.models.dto.citizen.CitizenResponseDto;
 import com.civil_registry.app.services.CitizenService;
 
 @RestController

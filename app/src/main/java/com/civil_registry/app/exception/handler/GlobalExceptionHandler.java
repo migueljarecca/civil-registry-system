@@ -1,10 +1,13 @@
 package com.civil_registry.app.exception.handler;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -14,6 +17,7 @@ import com.civil_registry.app.exception.common.ResourceAlreadyExistsException;
 import com.civil_registry.app.exception.common.ResourceNotFoundException;
 import com.civil_registry.app.exception.filedocument.FileDocumentAlreadyAssignedException;
 import com.civil_registry.app.models.dto.ErrorResponseDto;
+import com.civil_registry.app.models.dto.ValidationErrorResponseDto;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -36,6 +40,36 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(errorResponseDto, HttpStatus.FORBIDDEN);
+    }
+
+
+    // ==========================================
+    // Validation exceptions
+    // ==========================================
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ValidationErrorResponseDto> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException exception,
+            WebRequest webRequest) {
+
+        List<ValidationErrorResponseDto.FieldError> errors = exception.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(error -> new ValidationErrorResponseDto.FieldError(
+                        error.getField(),
+                        error.getDefaultMessage()
+                ))
+                .collect(Collectors.toList());
+
+        ValidationErrorResponseDto errorResponse = new ValidationErrorResponseDto(
+                webRequest.getDescription(false),
+                HttpStatus.BAD_REQUEST,
+                "Validation failed",
+                errors,
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
 

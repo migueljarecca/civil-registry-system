@@ -2,8 +2,8 @@ package com.civil_registry.app.services;
 
 import java.util.List;
 
-import com.civil_registry.app.models.dto.CitizenCreateDto;
-import com.civil_registry.app.models.dto.CitizenResponseDto;
+import com.civil_registry.app.models.dto.citizen.CitizenCreateDto;
+import com.civil_registry.app.models.dto.citizen.CitizenResponseDto;
 
 public interface CitizenService {
 

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.civil_registry.app.exception.common.ResourceAlreadyExistsException;
 import com.civil_registry.app.exception.common.ResourceNotFoundException;
-import com.civil_registry.app.models.dto.CitizenCreateDto;
-import com.civil_registry.app.models.dto.CitizenResponseDto;
+import com.civil_registry.app.models.dto.citizen.CitizenCreateDto;
+import com.civil_registry.app.models.dto.citizen.CitizenResponseDto;
 import com.civil_registry.app.models.entities.Citizen;
 import com.civil_registry.app.models.mapper.CitizenMapper;
 import com.civil_registry.app.repositories.CitizenRepository;
