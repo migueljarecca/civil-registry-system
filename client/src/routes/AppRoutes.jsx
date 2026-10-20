@@ -3,8 +3,7 @@ import { DashboardLayout } from "../layouts/DashboardLayout/DashboardLayout"
 import { DashboardPage } from "../pages/dashboard/dashboardPage"
 import { MainLayout } from "../layouts/MainLayout/MainLayout"
 import { AuthLayout } from "../layouts/AuthLayout/AuthLayout"
-import { AuthPage } from "../pages/auth/AuthPage"
-import { Login } from "../components/auth/Login"
+import { LoginPage } from "../pages/auth/login/LoginPage"
 import { NotFound } from "../pages/shared/NotFound"
 import { HomePage } from "../pages/home/HomePage"
 import { ServicesPage } from "../pages/services/ServicesPage"
@@ -14,6 +13,7 @@ import { MarriageServicePage } from "../pages/services/marriage/MarriageServiceP
 import { DeathServicePage } from "../pages/services/death/DeathServicePage"
 import { CertificatesServicePage } from "../pages/services/certificates/CertificatesServicePage"
 import { ServicesOverview } from "../pages/services/overview/ServicesOverview"
+import { RegisterPage } from "../pages/auth/register/RegisterPage"
 
 
 export const AppRoutes = () => {
@@ -40,9 +40,9 @@ export const AppRoutes = () => {
           <Route path="/dashboard" element={<DashboardPage />} />
         </Route>
 
-        <Route element={<AuthLayout />}>
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth" element={<AuthLayout />}>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

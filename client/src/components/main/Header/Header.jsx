@@ -50,6 +50,8 @@ export const Header = () => {
                     <span className="header-main__title">Registro Civil</span>
                 </div>
                 <div className="header-main__actions">
+                    <NavLink to="/auth/login">Iniciar sesión</NavLink>
+                    <NavLink to="/auth/register">Registrarse</NavLink>
                     <div className="header-main__icon-wrapper">
                         <User />
                     </div>
