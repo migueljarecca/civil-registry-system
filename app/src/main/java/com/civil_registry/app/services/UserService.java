@@ -2,36 +2,67 @@ package com.civil_registry.app.services;
 
 import java.util.List;
 
+import com.civil_registry.app.models.dto.user.ChangePasswordDto;
+import com.civil_registry.app.models.dto.user.ResetPasswordResponseDto;
 import com.civil_registry.app.models.dto.user.UserCreateDto;
 import com.civil_registry.app.models.dto.user.UserResponseDto;
+import com.civil_registry.app.models.dto.user.UserUpdateDto;
 
 public interface UserService {
 
     /**
-     * @return List of all users
+     * Retrieves all users.
+     *
+     * @return List of UserResponseDto containing all users
      */
     List<UserResponseDto> fetchAllUsers();
 
     /**
-     * @param id - input id
-     * @return User details based on a given id.
+     * Retrieves a user by ID.
+     *
+     * @param id - ID of the user to retrieve
+     * @return UserResponseDto containing the user details
      */
     UserResponseDto fetchUser(Long id);
 
     /**
-     * @param userCreateDto - userCreateDto Object
+     * Creates a new user.
+     *
+     * @param userCreateDto - user data to create
+     * @return UserResponseDto containing the created user details
      */
-    void createUser(UserCreateDto userCreateDto);
+    UserResponseDto createUser(UserCreateDto userCreateDto);
 
     /**
-     * @param userCreateDto Object
-     * @return boolean indicating if the update of user details is successful or not
+     * Updates an existing user.
+     *
+     * @param id - ID of the user to update
+     * @param userUpdateDto - user data to update
+     * @return UserResponseDto containing the updated user details
      */
-    void updateUser(Long id, UserCreateDto userCreateDto);
+    UserResponseDto updateUser(Long id, UserUpdateDto userCreateDto);
+
 
     /**
-     * @param id - Input id
-     * @return boolean indicating if the delete of User details is successful or not
+     * Changes the password for a user.
+     *
+     * @param id - ID of the user whose password to change
+     * @param changePasswordDto - new password data
+     */
+    void changePassword(Long id, ChangePasswordDto changePasswordDto);
+
+
+    /**
+     * Changes the password for a admin by generating a temporary password.
+     * 
+     * @param id - ID of the user whose password to reset
+     */
+    ResetPasswordResponseDto resetPassword(Long id);
+
+    /**
+     * Deletes a user by ID.
+     *
+     * @param id - ID of the user to delete
      */
     void deleteUser(Long id);
 }

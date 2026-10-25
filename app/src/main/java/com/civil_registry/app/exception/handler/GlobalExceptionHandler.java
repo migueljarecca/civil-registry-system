@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 import com.civil_registry.app.exception.citizen.CitizenDniModificationException;
+import com.civil_registry.app.exception.common.InvalidPasswordException;
 import com.civil_registry.app.exception.common.ResourceAlreadyExistsException;
 import com.civil_registry.app.exception.common.ResourceNotFoundException;
 import com.civil_registry.app.exception.filedocument.FileDocumentAlreadyAssignedException;
@@ -106,6 +107,21 @@ public class GlobalExceptionHandler {
 
             return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
         }
+
+        @ExceptionHandler(InvalidPasswordException.class)
+        public ResponseEntity<ErrorResponseDto> handleInvalidPasswordException(
+                InvalidPasswordException exception,
+                WebRequest webRequest) {
+
+            ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                    webRequest.getDescription(false),
+                    HttpStatus.BAD_REQUEST,
+                    exception.getMessage(),
+                    LocalDateTime.now()
+            );
+
+            return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+        }        
        
 
     // ==========================================

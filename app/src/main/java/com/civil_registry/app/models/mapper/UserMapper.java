@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.civil_registry.app.models.dto.user.UserCreateDto;
 import com.civil_registry.app.models.dto.user.UserResponseDto;
+import com.civil_registry.app.models.dto.user.UserUpdateDto;
 import com.civil_registry.app.models.entities.Role;
 import com.civil_registry.app.models.entities.User;
 
@@ -24,7 +25,7 @@ public class UserMapper {
     }
 
 
-    public static void updateUserFromDto(User user, UserCreateDto dto) {
+    public static void updateUserFromDto(User user, UserUpdateDto dto) {
 
         user.setName(dto.getName());
         user.setLastname(dto.getLastname());

@@ -1,5 +1,6 @@
 package com.civil_registry.app.services.impl;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,10 +9,14 @@ import java.util.Set;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.civil_registry.app.exception.common.InvalidPasswordException;
 import com.civil_registry.app.exception.common.ResourceAlreadyExistsException;
 import com.civil_registry.app.exception.common.ResourceNotFoundException;
+import com.civil_registry.app.models.dto.user.ChangePasswordDto;
+import com.civil_registry.app.models.dto.user.ResetPasswordResponseDto;
 import com.civil_registry.app.models.dto.user.UserCreateDto;
 import com.civil_registry.app.models.dto.user.UserResponseDto;
+import com.civil_registry.app.models.dto.user.UserUpdateDto;
 import com.civil_registry.app.models.entities.Role;
 import com.civil_registry.app.models.entities.User;
 import com.civil_registry.app.models.mapper.UserMapper;
@@ -21,6 +26,11 @@ import com.civil_registry.app.services.UserService;
 
 @Service 
 public class UserServiceImpl implements UserService {
+
+    private static final String TEMP_PASSWORD_CHARS =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
+    private static final int TEMP_PASSWORD_LENGTH = 12;
+
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -81,7 +91,7 @@ public class UserServiceImpl implements UserService {
      * @throws ResourceNotFoundException if the {@code ROLE_USER} role does not exist.
      */
     @Override
-    public void createUser(UserCreateDto userCreateDto) {
+    public UserResponseDto createUser(UserCreateDto userCreateDto) {
 
         User user = UserMapper.createUserFromDto(userCreateDto);
 
@@ -103,7 +113,9 @@ public class UserServiceImpl implements UserService {
         roles.add(existingRole);
         user.setRoles(roles);
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        return UserMapper.toUserResponseDto(savedUser);
     }
 
 
@@ -116,26 +128,22 @@ public class UserServiceImpl implements UserService {
      * @throws ResourceAlreadyExistsException if the DNI or email already belongs to another user.
      */  
     @Override
-    public void updateUser(Long id, UserCreateDto userCreateDto) {
+    public UserResponseDto updateUser(Long id, UserUpdateDto userUpdateDto) {
 
-        String normalizedEmail = normalizeEmail(userCreateDto.getEmail());
-        
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> 
-                        new ResourceNotFoundException("User", "id", String.valueOf(id)));
+    User user = userRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("User", "id", String.valueOf(id)));
 
-        validateDniNotTaken(userCreateDto.getDni(), id);
-        validateEmailNotTaken(normalizedEmail, id);                       
+    String normalizedEmail = normalizeEmail(userUpdateDto.getEmail());
 
-        UserMapper.updateUserFromDto(user, userCreateDto);
-        user.setEmail(normalizedEmail);
+    validateDniNotTaken(userUpdateDto.getDni(), id);
+    validateEmailNotTaken(normalizedEmail, id);
 
-        if (userCreateDto.getPassword() != null && !userCreateDto.getPassword().isBlank()) {
-            user.setPassword(passwordEncoder.encode(userCreateDto.getPassword()));
-        }
-        
-        userRepository.save(user);
+    UserMapper.updateUserFromDto(user, userUpdateDto);
+    user.setEmail(normalizedEmail);
 
+    User savedUser = userRepository.save(user);
+
+    return UserMapper.toUserResponseDto(savedUser);
     }
 
 
@@ -155,6 +163,54 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
 
     }
+
+
+    /**
+     * Resets the password for a user by generating a temporary password.
+     *
+     * @param id identifier of the user whose password to reset.
+     * @return ResetPasswordResponseDto containing the temporary password and a success message.
+     * @throws ResourceNotFoundException if no user exists with the given ID.
+     */
+    @Override
+    public ResetPasswordResponseDto resetPassword(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", String.valueOf(id)));
+
+        String temporaryPassword = generateTemporaryPassword();
+
+        user.setPassword(passwordEncoder.encode(temporaryPassword));
+        userRepository.save(user);
+
+        return new ResetPasswordResponseDto(
+                user.getEmail(),
+                temporaryPassword,
+                "Password reset successfully. Provide this temporary password to the user."
+        );
+    }    
+
+    
+    /**
+     * Changes the password of an existing user.
+     *
+     * @param userId - ID of the user whose password will be changed
+     * @param changePasswordDto - current and new password data
+     */
+    @Override
+    public void changePassword(Long userId, ChangePasswordDto changePasswordDto) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", String.valueOf(userId)));
+
+        if (!passwordEncoder.matches(changePasswordDto.getCurrentPassword(), user.getPassword())) {
+            throw new InvalidPasswordException("Current password is incorrect");
+        }
+
+        user.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
+
+        userRepository.save(user);
+    }    
 
 
     // ==========================================
@@ -189,6 +245,17 @@ public class UserServiceImpl implements UserService {
     private String normalizeEmail(String email) {
         return email == null ? null : email.toLowerCase().trim();
     }
+
+
+    private String generateTemporaryPassword() {
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(TEMP_PASSWORD_LENGTH);
+        for (int i = 0; i < TEMP_PASSWORD_LENGTH; i++) {
+            sb.append(TEMP_PASSWORD_CHARS.charAt(random.nextInt(TEMP_PASSWORD_CHARS.length())));
+        }
+        return sb.toString();
+    }
+    
 
 }
 
