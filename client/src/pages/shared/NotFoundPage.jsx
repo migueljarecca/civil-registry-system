@@ -1,5 +1,5 @@
 
-export const NotFound = () => {
+export const NotFoundPage = () => {
 
     return (
         <>
