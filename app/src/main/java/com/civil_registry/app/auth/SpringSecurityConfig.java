@@ -66,8 +66,9 @@ public class SpringSecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login").permitAll()
+                .requestMatchers("/auth/register").permitAll() 
 
-                .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
 
@@ -92,6 +93,7 @@ public class SpringSecurityConfig {
     }    
 
 
+    /** cors */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

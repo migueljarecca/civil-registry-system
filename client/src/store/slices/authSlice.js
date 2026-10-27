@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { login } from "../../services/authService";
+import { login, register } from "../../services/authService";
 import { decodeJwt } from "../../utils/jwt";
 
 // Thunk for login
@@ -27,6 +27,25 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+// Thunk for register
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async (userData, { rejectWithValue }) => {
+    try {
+      return await register(userData);
+    } catch (error) {
+      if (!error.response) {
+        return rejectWithValue({ message: 'No se pudo conectar con el servidor' });
+      }
+      const { status, data } = error.response;
+      if (status === 400 && data.errors) {
+        return rejectWithValue({ message: data.errorMessage || 'Validación fallida', errors: data.errors });
+      }
+      return rejectWithValue({ message: data.errorMessage || data.message || 'Error al registrarse' });
+    }
+  }
+);
+
 
 const token = localStorage.getItem('token');
 
@@ -36,6 +55,10 @@ const initialState = {
   loading: false,
   error: null,
   isAuthenticated: Boolean(token),
+
+  registerLoading: false,
+  registerError: null,
+  registerFieldErrors: null,
 };
 
 
@@ -50,6 +73,10 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       localStorage.removeItem('token');
     },
+    clearRegisterError: (state) => {
+      state.registerError = null;
+      state.registerFieldErrors = null;
+    },    
     clearError: (state) => {
       state.error = null;
     },
@@ -70,10 +97,33 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+   
+      .addCase(registerUser.pending, (state) => {
+        state.registerLoading = true;
+        state.registerError = null;
+        state.registerFieldErrors = null;
+      })
+      .addCase(registerUser.fulfilled, (state) => {
+        state.registerLoading = false;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.registerLoading = false;
+        if (action.payload?.errors) {
+          state.registerFieldErrors = action.payload.errors;
+          state.registerError = null;
+        } else {
+          state.registerError = action.payload?.message || 'Error al registrarse';
+          state.registerFieldErrors = null;
+        }
+      });  
   },
 });
 
-export const { logout, clearError } = authSlice.actions;
+export const { 
+  logout, 
+  clearError,
+  clearRegisterError
+ } = authSlice.actions;
 
 export default authSlice.reducer;
