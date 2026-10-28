@@ -68,6 +68,8 @@ public class SpringSecurityConfig {
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/auth/register").permitAll() 
 
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
                 .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
