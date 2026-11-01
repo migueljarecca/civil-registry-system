@@ -1,0 +1,66 @@
+.spinner {
+  display: inline-block;
+  border-style: solid;
+  border-color: currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+/* ============ TAMAÑOS ============ */
+.sm {
+  width: 1.6rem;             /* 16px */
+  height: 1.6rem;
+  border-width: 2px;
+}
+
+.md {
+  width: 2.4rem;             /* 24px */
+  height: 2.4rem;
+  border-width: 3px;
+}
+
+.lg {
+  width: 4rem;               /* 40px */
+  height: 4rem;
+  border-width: 4px;
+}
+
+/* ============ COLORES ============ */
+.primary {
+  color: var(--color-primary);
+}
+
+.neutral {
+  color: var(--color-text-muted);
+}
+
+.inverse {
+  color: var(--color-text-inverse);
+}
+
+/* ============ LABEL ============ */
+.label {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+/* ============ CENTERED ============ */
+.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-2xl) var(--space-md);
+  width: 100%;
+  color: var(--color-primary);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

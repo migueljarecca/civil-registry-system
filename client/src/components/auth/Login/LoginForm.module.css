@@ -1,0 +1,29 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  font-size: var(--fs-sm);
+  font-family: var(--font-body);
+}
+
+.footerText {
+  color: var(--color-text-muted);
+}
+
+.footerLink {
+  color: var(--color-primary);
+  font-weight: var(--fw-semibold);
+  transition: color var(--transition-fast);
+}
+
+.footerLink:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}

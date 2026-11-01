@@ -5,11 +5,7 @@ import App from './App.jsx'
 import { store } from './store'
 import { Provider } from 'react-redux';
 
-import './styles/Reset.css'
 import './styles/Global.css'
-import './styles/Variables.css'
-import './styles/Fonts.css'
-import './styles/Typography.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

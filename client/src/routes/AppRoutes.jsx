@@ -23,6 +23,7 @@ import { ChangePasswordPage } from "../pages/user/perfil/ChangePasswordPage"
 import { ForbiddenPage } from "../pages/shared/ForbiddenPage"
 import { UserFormPage } from "../pages/dashboard/users/UserFormPage"
 import { UserDetailPage } from "../pages/dashboard/users/UserDetailPage"
+import { Components } from "../pages/Contact/Components"
 
 
 export const AppRoutes = () => {
@@ -44,6 +45,8 @@ export const AppRoutes = () => {
         </Route>
 
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/component" element={<Components />} />
+
 
         </Route>
 

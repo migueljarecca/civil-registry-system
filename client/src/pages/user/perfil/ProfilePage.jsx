@@ -6,6 +6,7 @@ import {
   clearCurrentUser,
 } from '../../../store/slices/usersSlice';
 
+
 export const ProfilePage = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -61,6 +62,7 @@ export const ProfilePage = () => {
       <Link to="/profile/edit">Editar perfil</Link>
       {' | '}
       <Link to="/profile/change-password">Cambiar contraseña</Link>
+
     </div>
   );
 };

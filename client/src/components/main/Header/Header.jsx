@@ -81,7 +81,17 @@ export const Header = () => {
                             >
                                 Contáctame
                             </NavLink>
-                            </li>
+
+                        </li>
+                        <li>
+                            <NavLink
+                            
+                                className="header-main__link"
+                                to="/component"    
+                            >
+                                Componentes
+                            </NavLink>                            
+                        </li>
                     </ul>
                 </nav>
             </div>

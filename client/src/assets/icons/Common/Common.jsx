@@ -62,3 +62,12 @@ export function Check () {
         </svg>
     )
 }
+
+/** hi2 HiOutlineArrowLeft */
+export function ArrowLeft () {
+  return (
+    <svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path>
+    </svg>    
+  )
+}  
