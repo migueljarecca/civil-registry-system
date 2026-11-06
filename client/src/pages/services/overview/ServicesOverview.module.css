@@ -1,0 +1,113 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+/* ============ INTRO ============ */
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.introTitle {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+}
+
+.introText {
+  font-size: var(--fs-base);
+  color: var(--color-text-muted);
+  line-height: var(--lh-loose);
+}
+
+/* ============ GRID ============ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+
+.serviceLink {
+  display: block;
+  color: inherit;
+  height: 100%;
+}
+
+.serviceCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  height: 100%;
+}
+
+.imageWrapper {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary-light);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: var(--space-sm);
+}
+
+.image {
+  max-width: 50%;
+  max-height: 70%;
+  object-fit: contain;
+}
+
+.tag {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 0.3rem var(--space-sm);
+  font-family: var(--font-button);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  border-radius: var(--radius-pill);
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.01em;
+}
+
+.cardDescription {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  line-height: var(--lh-loose);
+  flex: 1;
+}
+
+.cardCta {
+  font-family: var(--font-button);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-primary);
+  margin-top: var(--space-xs);
+  transition: transform var(--transition-fast);
+}
+
+.serviceLink:hover .cardCta {
+  transform: translateX(4px);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

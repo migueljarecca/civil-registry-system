@@ -1,100 +1,72 @@
-import { NavLink } from "react-router-dom"
-import birth from "../../../assets/images/birth.png"
-import marriage from "../../../assets/images/marriage.png"
-import death from "../../../assets/images/death.png"
-import certificate from "../../../assets/images/certificate.png"
+import { Link } from 'react-router-dom';
+import { Card } from '../../../components/ui/Card/Card';
+import birthImg from '../../../assets/images/birth.png';
+import marriageImg from '../../../assets/images/marriage.png';
+import deathImg from '../../../assets/images/death.png';
+import certificateImg from '../../../assets/images/certificate.png';
+import styles from './ServicesOverview.module.css';
 
-import "./ServicesOverview.css"
+const services = [
+  {
+    title: 'Inscripción de nacimiento',
+    description:
+      'Registra el nacimiento de tu hijo por primera vez y obtiene su acta de nacimiento.',
+    image: birthImg,
+    to: '/services/birth',
+    tag: 'Trámite presencial',
+  },
+  {
+    title: 'Matrimonio civil',
+    description:
+      'Contrae matrimonio civil ante la municipalidad y obtiene tu acta de matrimonio.',
+    image: marriageImg,
+    to: '/services/marriage',
+    tag: 'Trámite presencial',
+  },
+  {
+    title: 'Inscripción de defunción',
+    description:
+      'Registra el fallecimiento de una persona y obtiene la constancia correspondiente.',
+    image: deathImg,
+    to: '/services/death',
+    tag: 'Trámite presencial',
+  },
+  {
+    title: 'Solicitud de partidas digitales',
+    description:
+      'Solicita copias digitales de partidas de nacimiento, matrimonio o defunción.',
+    image: certificateImg,
+    to: '/services/certificates',
+    tag: 'Servicio online',
+  },
+];
 
 export const ServicesOverview = () => {
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.intro}>
+        <h2 className={styles.introTitle}>Trámites disponibles</h2>
+        <p className={styles.introText}>
+          Selecciona el servicio que necesitas realizar. Puedes consultar los requisitos
+          y pasos antes de comenzar.
+        </p>
+      </div>
 
-    return (
-        <div className="overview-service">
-
-            <section className="overview-service__section">
-                <h1 className="overview-service__title">
-                    Servicios del Registro Civil
-                </h1>
-                <p className="overview-service__description">
-                    Encuentra información sobre los principales trámites y servicios que
-                    ofrece el Registro Civil de la Municipalidad.
-                </p>
-            </section>
-
-            <section className="overview-service__section">
-                <h2 className="overview-service__subtitle">
-                    Servicios Disponibles
-                </h2>
-
-                <div className="overview-service__container">
-
-                    <article className="overview-service__card">
-                        <NavLink to="/services/birth" className="overview-service__card-link"></NavLink>
-
-                        <div className="overview-service__card-img">
-                            <img src={birth} alt="Nacimiento" />
-                        </div>
-
-                        <div className="overview-service__card-content">
-                            <h3 className="overview-service__card-title">Nacimiento</h3>
-                            <p className="overview-service__card-description">
-                                Información para inscribir el nacimiento de un recién nacido.
-                            </p>
-                        </div>
-                    </article>
-
-                    <article className="overview-service__card">
-                        <NavLink to="/services/marriage" className="overview-service__card-link"></NavLink>
-
-                        <div className="overview-service__card-img">
-                            <img src={marriage} alt="Matrimonio" />
-                        </div>
-
-                        <div className="overview-service__card-content">
-                            <h3 className="overview-service__card-title">Matrimonio</h3>
-                            <p className="overview-service__card-description">
-                                Conoce los requisitos y pasos para contraer matrimonio civil.
-                            </p>
-                        </div>
-                    </article>
-
-                    <article className="overview-service__card">
-                        <NavLink to="/services/death" className="overview-service__card-link"></NavLink>
-
-                        <div className="overview-service__card-img">
-                            <img src={death} alt="Defunción" />
-                        </div>
-
-                        <div className="overview-service__card-content">
-                            <h3 className="overview-service__card-title">Defunción</h3>
-                            <p className="overview-service__card-description">
-                                Información para realizar la inscripción de una defunción.
-                            </p>
-                        </div>
-                    </article>
-
-                    <article className="overview-service__card">
-                        <NavLink to="/services/certificates" className="overview-service__card-link"></NavLink>
-
-                        <div className="overview-service__card-img">
-                            <img src={certificate} alt="Partidas digitales" />
-                        </div>
-
-                        <div className="overview-service__card-content">
-                            <h3 className="overview-service__card-title">Partidas digitales</h3>
-                            <p className="overview-service__card-description">
-                                Solicita copias digitales de partidas de nacimiento, matrimonio o defunción.
-                            </p>
-                        </div>
-                    </article>
-
-                </div>
-
-
-            </section>
-
- 
-
-        </div>
-    )
-}
+      <div className={styles.grid}>
+        {services.map((service) => (
+          <Link key={service.to} to={service.to} className={styles.serviceLink}>
+            <Card interactive className={styles.serviceCard}>
+              <div className={styles.imageWrapper}>
+                <img src={service.image} alt="" className={styles.image} />
+              </div>
+              <span className={styles.tag}>{service.tag}</span>
+              <h3 className={styles.cardTitle}>{service.title}</h3>
+              <p className={styles.cardDescription}>{service.description}</p>
+              <span className={styles.cardCta}>Ver más →</span>
+            </Card>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};

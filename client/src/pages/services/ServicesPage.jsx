@@ -1,71 +1,72 @@
-import "./ServicesPage.css"
-import { Outlet } from "react-router-dom"
-import { NavLink } from "react-router-dom"
+import { useEffect } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+import styles from './ServicesPage.module.css';
+
+const sidebarServices = [
+  { to: '/services', label: 'Todos los servicios', end: true },
+  { to: '/services/birth', label: 'Inscripción de nacimiento' },
+  { to: '/services/marriage', label: 'Matrimonio civil' },
+  { to: '/services/death', label: 'Inscripción de defunción' },
+  { to: '/services/certificates', label: 'Solicitud de partidas digitales' },
+];
 
 export const ServicesPage = () => {
+  const { pathname } = useLocation();
 
-    return (
-        <div className="services">
-            <header className="services__header">
-                <div>
-                    <h2 className="services__title">Servicios</h2>
-                </div>
-            </header>
+  // scroll to the top when the page changes (e.g., from birth to marriage)
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [pathname]);
 
-            <div className="services__content">
-                <aside className="services__sidebar">
-                    <nav className="services__nav">
-                        <ul className="services__list">
-                            <li className="services__item">
-                                <NavLink 
-                                    className="services__link"
-                                    to="/services" 
-                                    end
-                                >
-                                    Todos los Servicios
-                                </NavLink>
-                            </li>
-                            <li className="services__item">
-                                <NavLink 
-                                    className="services__link"
-                                    to="/services/birth"
-                                >
-                                    Nacimiento
-                                </NavLink>
-                            </li>
-                            <li className="services__item">
-                                <NavLink 
-                                    className="services__link"
-                                    to="/services/marriage"
-                                >
-                                    Matrimonio
-                                </NavLink>
-                            </li>
-                            <li className="services__item">
-                                <NavLink 
-                                    className="services__link"
-                                    to="/services/death"
-                                >
-                                    Defunción
-                                </NavLink>
-                            </li>
-                            <li className="services__item">
-                                <NavLink 
-                                    className="services__link" 
-                                    to="/services/certificates"
-                                >
-                                    Certificados
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </nav>
-                </aside>
+  return (
+    <div className={styles.page}>
+      {/* ============ HERO ============ */}
+      <header className={styles.hero}>
+        <div className={styles.container}>
+          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+            <Link to="/" className={styles.breadcrumbLink}>Inicio</Link>
+            <span className={styles.breadcrumbSep}>/</span>
+            <span className={styles.breadcrumbCurrent}>Servicios</span>
+          </nav>
 
-
-                <main className="services__main">
-                    <Outlet />
-                </main>
-            </div>
+          <div className={styles.heroContent}>
+            <h1 className={styles.heroTitle}>Servicios</h1>
+          </div>
         </div>
-    )
-}        
+      </header>
+
+      {/* ============ GRID: SIDEBAR + OUTLET ============ */}
+      <div className={styles.container}>
+        <div className={styles.layout}>
+          {/* Sidebar */}
+          <aside className={styles.sidebar}>
+            <nav className={styles.sidebarNav} aria-label="Navegación de servicios">
+              <ul className={styles.sidebarList}>
+                {sidebarServices.map((service) => (
+                  <li key={service.to}>
+                    <NavLink
+                      to={service.to}
+                      end={service.end}
+                      className={({ isActive }) =>
+                        isActive
+                          ? `${styles.sidebarLink} ${styles.sidebarLinkActive}`
+                          : styles.sidebarLink
+                      }
+                    >
+                      {service.label}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </aside>
+
+          {/* Content */}
+          <main className={styles.content}>
+            <Outlet />
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+};

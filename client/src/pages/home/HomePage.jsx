@@ -1,110 +1,174 @@
-import "./HomePage.css"
-import { NavLink } from "react-router-dom"
-import marriage from "../../assets/images/marriage.png"
-import birth from "../../assets/images/birth.png"
-import death from "../../assets/images/death.png"
-import certificate from "../../assets/images/certificate.png"
+import { Link } from 'react-router-dom';
+import { Card } from '../../components/ui/Card/Card';
+import { Button } from '../../components/ui/Button/Button';
+import heroImg from '../../assets/hero.png';
+import birthImg from '../../assets/images/birth.png';
+import marriageImg from '../../assets/images/marriage.png';
+import deathImg from '../../assets/images/death.png';
+import certificateImg from '../../assets/images/certificate.png';
+import styles from './HomePage.module.css';
+import { ArrowRight } from '../../assets/icons/Common/Common';
 
-import { MagnifyingGlass } from "../../assets/icons/Common/Common"
+const services = [
+  {
+    title: 'Inscripción de nacimiento',
+    description: 'Registra a tu recién nacido por primera vez en la municipalidad.',
+    image: birthImg,
+    to: '/services/birth',
+    tag: 'Presencial',
+  },
+  {
+    title: 'Matrimonio civil',
+    description: 'Inicia tu expediente matrimonial ante la municipalidad.',
+    image: marriageImg,
+    to: '/services/marriage',
+    tag: 'Presencial',
+  },
+  {
+    title: 'Inscripción de defunción',
+    description: 'Registra el fallecimiento y obtiene la constancia correspondiente.',
+    image: deathImg,
+    to: '/services/death',
+    tag: 'Presencial',
+  },
+  {
+    title: 'Solicitud de partidas digitales',
+    description: 'Pide tu partida de nacimiento, matrimonio o defunción online.',
+    image: certificateImg,
+    to: '/services/certificates',
+    tag: 'Online',
+    highlight: true,
+  },
+];
+
+const steps = [
+  {
+    number: '01',
+    title: 'Inicia sesión',
+    description: 'Ingresa con tu cuenta o regístrate para solicitar una partida digital.',
+  },
+  {
+    number: '02',
+    title: 'Selecciona la partida',
+    description: 'Indica si necesitas una partida de nacimiento, matrimonio o defunción.',
+  },
+  {
+    number: '03',
+    title: 'Consulta el estado',
+    description: 'Sigue el proceso de tu solicitud y descarga tu documento cuando este listo.',
+  },
+];
 
 export const HomePage = () => {
+  return (
+    <div className={styles.page}>
+      {/* ============ HERO ============ */}
+      <section className={styles.hero}>
+        <div className={styles.container}>
+          <div className={styles.heroContent}>
+            <span className={styles.heroEyebrow}>Municipalidad Distrital de Huanuara</span>
+            <h1 className={styles.heroTitle}>
+              Registro Civil Digital<br />
+            </h1>
+            <p className={styles.heroSubtitle}>
+              Encuentra información y servicios para tus trámites de registro civil.
+            </p>
+            <div className={styles.heroActions}>
+              <Link to="/services/certificates">
+                <Button variant="primary" size="lg">Solicitar partida digital</Button>
+              </Link>
+              <Link to="/services">
+                <Button variant="secondary" size="lg">Ver todos los servicios</Button>
+              </Link>
+            </div>
+          </div>
 
-    return (
+          <div className={styles.heroImage}>
+            <img src={heroImg} alt="" className={styles.heroImageEl} />
+          </div>
+        </div>
+      </section>
 
-        <main className= "home">
-            
-            <section className="home__hero">
+      {/* ============ SERVICES ============ */}
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionEyebrow}>Servicios</span>
+            <h2 className={styles.sectionTitle}>¿Qué necesitas realizar?</h2>
+            <p className={styles.sectionSubtitle}>
+              Conoce los trámites disponibles. Algunos se realizan online y otros de forma presencial.
+            </p>
+          </div>
 
-                <div className="home__content">
-                    <h1 className="home__title">Registro Civil Digital</h1>
-                    <p className="home__subtitle">Encuentra información y servicios para tus trámites de registro civil.</p>
-                </div>
+          <div className={styles.servicesGrid}>
+            {services.map((service) => (
+              <Link
+                key={service.to}
+                to={service.to}
+                className={styles.serviceLink}
+              >
+                <Card interactive className={styles.serviceCard}>
+                  <div className={styles.serviceImageWrapper}>
+                    <img
+                      src={service.image}
+                      alt=""
+                      className={styles.serviceImage}
+                    />
+                  </div>
+                  <div className={styles.serviceHeader}>
+                    <h3 className={styles.serviceTitle}>{service.title}</h3>
+                    <span className={`${styles.serviceTag} ${service.highlight ? styles.tagOnline : styles.tagPresencial}`}>
+                      {service.tag}
+                    </span>
+                  </div>
+                  <p className={styles.serviceDescription}>
+                    {service.description}
+                  </p>
+                  <span className={styles.serviceCta}>
+                    Ver más
+                    <ArrowRight />
+                  </span>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
+      {/* ============ HOW IT WORKS (Partidas digitales) ============ */}
+      <section className={`${styles.section} ${styles.sectionAlt}`}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionEyebrow}>Solicitud de partidas</span>
+            <h2 className={styles.sectionTitle}>Tres pasos para obtener tu documento</h2>
+          </div>
 
-                <div className="home__search">
+          <div className={styles.stepsGrid}>
+            {steps.map((step) => (
+              <div key={step.number} className={styles.step}>
+                <span className={styles.stepNumber}>{step.number}</span>
+                <h3 className={styles.stepTitle}>{step.title}</h3>
+                <p className={styles.stepDescription}>{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                    <form className="home__search-form">
-                        <input 
-                            type="text"
-                            className="home__search-input"
-                            placeholder="Buscar por DNI, nombres o apellidos..."
-                        />
-                        <button className="home__search-btn">
-                            <MagnifyingGlass />
-                        </button>
-                    </form>
-                </div>
-                
-            </section>
-
-            <section className="home__services">
-
-                <h2 className="home__services-title">Servicio</h2>
-
-                <div className="home__services-container">
-
-                    <article className="home__services-card">
-                        <NavLink to="/services/birth" className="home__services-card-link"></NavLink>
-
-                        <div className="home__services-card-img">
-                            <img src={birth} alt="Nacimiento" />
-                        </div>
-
-                        <div className="home__services-card-content">
-                            <h3 className="home__services-card-title">Nacimiento</h3>
-                            <p className="home__services-card-description">
-                                Información para inscribir el nacimiento de un recién nacido.
-                            </p>
-                        </div>
-                    </article>
-
-                    <article className="home__services-card">
-                        <NavLink to="/services/marriage" className="home__services-card-link"></NavLink>
-
-                        <div className="home__services-card-img">
-                            <img src={marriage} alt="Matrimonio" />
-                        </div>
-
-                        <div className="home__services-card-content">
-                            <h3 className="home__services-card-title">Matrimonio</h3>
-                            <p className="home__services-card-description">
-                                Conoce los requisitos y pasos para contraer matrimonio civil.
-                            </p>
-                        </div>
-                    </article>
-
-                    <article className="home__services-card">
-                        <NavLink to="/services/death" className="home__services-card-link"></NavLink>
-
-                        <div className="home__services-card-img">
-                            <img src={death} alt="Defunción" />
-                        </div>
-
-                        <div className="home__services-card-content">
-                            <h3 className="home__services-card-title">Defunción</h3>
-                            <p className="home__services-card-description">
-                                Información para realizar la inscripción de una defunción.
-                            </p>
-                        </div>
-                    </article>
-
-                    <article className="home__services-card">
-                        <NavLink to="/services/certificates" className="home__services-card-link"></NavLink>
-
-                        <div className="home__services-card-img">
-                            <img src={certificate} alt="Partidas digitales" />
-                        </div>
-
-                        <div className="home__services-card-content">
-                            <h3 className="home__services-card-title">Partida digital</h3>
-                            <p className="home__services-card-description">
-                                Solicita copias digitales de partidas de nacimiento, matrimonio o defunción.
-                            </p>
-                        </div>
-                    </article>
-
-                </div>
-            </section>      
-        </main>
-    )
-}
+      {/* ============ CTA FINAL ============ */}
+      <section className={styles.cta}>
+        <div className={styles.container}>
+          <div className={styles.ctaContent}>
+            <h2 className={styles.ctaTitle}>¿Necesitas una partida digital?</h2>
+            <p className={styles.ctaSubtitle}>
+              Crea tu cuenta para iniciar tu solicitud y consultar el estado del trámite.
+            </p>
+            <Link to="/auth/register">
+              <Button variant="primary" size="lg">Crear cuenta</Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};

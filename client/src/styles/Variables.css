@@ -22,14 +22,27 @@
   --color-text-inverse:   #ffffff;
 
   /* ============ SEMÁNTICOS ============ */
-  --color-success:        #1e8e5a;
+  /* --color-success:        #1e8e5a;
   --color-success-bg:     #e6f5ee;
   --color-warning:        #c98a12;
   --color-warning-bg:     #fdf3dc;
   --color-danger:         #c93a3a;
   --color-danger-bg:      #fbe9e9;
   --color-info:           #1e6fa8;
-  --color-info-bg:        #e8f1f8;
+  --color-info-bg:        #e8f1f8; */
+
+
+  --color-success:        #0f7b4d;
+  --color-success-bg:     #eafaf1;
+
+  --color-warning:        #b37200;
+  --color-warning-bg:     #fff9e6;
+
+  --color-danger:         #d32f2f;
+  --color-danger-bg:      #fdeded;
+
+  --color-info:           #0277bd;
+  --color-info-bg:        #e1f5fe;
 
   /* ============ TIPOGRAFÍA ============ */
   --font-heading: 'Montserrat', sans-serif;

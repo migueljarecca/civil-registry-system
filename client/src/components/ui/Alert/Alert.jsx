@@ -1,10 +1,11 @@
+import { CheckCircle, ExclamationTriangle, InformationCircle, XMark } from '../../../assets/icons/Alert/Alert';
 import styles from './Alert.module.css';
 
 const defaultIcons = {
-  error: '⚠',
-  success: '✓',
-  warning: '⚠',
-  info: 'ℹ',
+  error: <ExclamationTriangle />,
+  success: <CheckCircle />,
+  warning: <ExclamationTriangle />,
+  info: <InformationCircle />,
 };
 
 export const Alert = ({
@@ -48,7 +49,7 @@ export const Alert = ({
           onClick={onClose}
           aria-label="Cerrar"
         >
-          ×
+          <XMark />
         </button>
       )}
     </div>

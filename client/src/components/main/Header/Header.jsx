@@ -1,100 +1,224 @@
-import "./Header.css"
+import { useState } from 'react';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../../store/slices/authSlice';
+import { Clock, Phone, User, Bars3, XMark } from '../../../assets/icons/Common/Common';
 
-import { Clock, Cog8Tooth, Phone, User } from "../../../assets/icons/Common/Common"
-import { Logo } from "../../../assets/icons/Logo/Logo"
-import { Facebook, Twitter } from "../../../assets/icons/Social/Social"
-import { NavLink, Link } from "react-router-dom"
+import { Facebook, Twitter } from '../../../assets/icons/Social/Social';
+import { Button } from '../../ui/Button/Button';
+import styles from './Header.module.css';
+import { Logo } from '../../../assets/icons/Logo/Logo';
 
 export const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-    return (
-        <header className="header"> 
+  const isAdmin = user?.roles?.includes('ROLE_ADMIN');
+  const userEmail = user?.sub;
 
-            <div className="header-top">
+  const handleLogout = () => {
+    dispatch(logout());
+    setMobileOpen(false);
+    navigate('/');
+  };
 
-                <div className="header-top__info">
-                    <div className="header-top__schedule">
-                        <div className="header-top__icon-wrapper">
-                            <Clock />
-                        </div>
-                        <span>Horario de atención: Lun - Vier, 8am - 12pm y 3pm - 8pm</span>
-                    </div>
-                    <div className="header-top__phone">
-                        <div className="header-top__icon-wrapper">
-                            <Phone />
-                        </div>
-                        <span>970449496</span>
-                    </div>
-                </div>
+  const closeMobile = () => setMobileOpen(false);
 
-                <div className="header-top__social">
-                    <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-                        <div className="header-top__icon-wrapper">
-                            <Facebook />
-                        </div>
-                    </a>
-                    <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
-                        <div className="header-top__icon-wrapper">
-                            <Twitter />
-                        </div>
-                    </a>
-                </div>
+  return (
+    <header className={styles.header}>
+      {/* ============ TOP BAR ============ */}
+      <div className={styles.topBar}>
+        <div className={styles.container}>
+          <div className={styles.topInfo}>
+            <div className={styles.topItem}>
+              <Clock />
+              <span>Lun - Vie, 8am - 12pm y 3pm - 8pm</span>
             </div>
-
-            <div className="header-main">
-                <div className="header-main__brand">
-                    <Link to="/" className="header-main__brand-link"></Link>
-                    <div className="header-main__logo-wrapper">
-                        <Logo />
-                    </div>
-                    <span className="header-main__title">Registro Civil</span>
-                </div>
-                <div className="header-main__actions">
-                    <NavLink to="/admin">Dashboard</NavLink>
-                    <NavLink to="/profile" className="header-main__action-link">Perfil</NavLink>
-                    <NavLink to="/auth/login">Iniciar sesión</NavLink>
-                    <NavLink to="/auth/register">Registrarse</NavLink>
-                    <div className="header-main__icon-wrapper">
-                        <User />
-                    </div>
-                    <div className="header-main__icon-wrapper">
-                        <Cog8Tooth />
-                    </div>
-                </div>
+            <div className={styles.topItem}>
+              <Phone />
+              <span>970 449 496</span>
             </div>
+          </div>
+          <div className={styles.topSocial}>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <Facebook />
+            </a>
+            <a
+              href="https://www.twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+            >
+              <Twitter />
+            </a>
+          </div>
+        </div>
+      </div>
 
-            <div className="header-nav">
-                <nav className="header-nav__nav">
-                    <ul className="header-main__menu">
-                        <li className="header-main__item">
-                            <NavLink
-                                className="header-main__link"
-                                to="/services"
-                            >
-                                Servicios
-                            </NavLink>
-                            </li>
-                        <li>
-                            <NavLink
-                                className="header-main__link"
-                                to="/contact"    
-                            >
-                                Contáctame
-                            </NavLink>
-
-                        </li>
-                        <li>
-                            <NavLink
-                            
-                                className="header-main__link"
-                                to="/component"    
-                            >
-                                Componentes
-                            </NavLink>                            
-                        </li>
-                    </ul>
-                </nav>
+      {/* ============ MAIN BAR ============ */}
+      <div className={styles.mainBar}>
+        <div className={styles.container}>
+          <Link to="/" className={styles.brand} onClick={closeMobile}>
+            <div className={styles.logoWrapper}>
+              <Logo />
             </div>
-        </header>
-    )
-}
+            <div className={styles.brandText}>
+              <span className={styles.brandTitle}>Registro Civil</span>
+              <span className={styles.brandSubtitle}>Distrito de Huanuara</span>
+            </div>
+          </Link>
+
+          {/* Desktop actions */}
+          <nav className={styles.desktopActions}>
+            {!isAuthenticated ? (
+              <>
+                <Link to="/auth/login" className={styles.authLink}>
+                  Iniciar sesión
+                </Link>
+                <Link to="/auth/register">
+                  <Button variant="primary" size="md">
+                    Registrarse
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                {isAdmin && (
+                  <Link to="/admin" className={styles.authLink}>
+                    Dashboard
+                  </Link>
+                )}
+                <Link to="/profile" className={styles.authLink}>
+                  <span className={styles.userIcon}>
+                    <User />
+                  </span>
+                  Mi perfil
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className={styles.authLink}
+                >
+                  Cerrar sesión
+                </button>
+              </>
+            )}
+          </nav>
+
+          {/* Mobile toggle */}
+          <button
+            type="button"
+            className={styles.mobileToggle}
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <XMark /> : <Bars3 />}
+          </button>
+        </div>
+      </div>
+
+      {/* ============ NAV ============ */}
+      <nav
+        className={`${styles.navBar} ${mobileOpen ? styles.navBarOpen : ''}`}
+      >
+        <div className={styles.container}>
+          <ul className={styles.navList}>
+            <li>
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) =>
+                  isActive ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink
+                }
+                onClick={closeMobile}
+              >
+                Inicio
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/services"
+                className={({ isActive }) =>
+                  isActive ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink
+                }
+                onClick={closeMobile}
+              >
+                Servicios
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  isActive ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink
+                }
+                onClick={closeMobile}
+              >
+                Contacto
+              </NavLink>
+            </li>
+          </ul>
+
+          {/* Mobile auth actions */}
+          {mobileOpen && (
+            <div className={styles.mobileAuth}>
+              {!isAuthenticated ? (
+                <>
+                  <Link
+                    to="/auth/login"
+                    className={styles.authLink}
+                    onClick={closeMobile}
+                  >
+                    Iniciar sesión
+                  </Link>
+                  <Link to="/auth/register" onClick={closeMobile}>
+                    <Button variant="primary" size="md" fullWidth>
+                      Registrarse
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      className={styles.authLink}
+                      onClick={closeMobile}
+                    >
+                      Dashboard
+                    </Link>
+                  )}
+                  <Link
+                    to="/profile"
+                    className={styles.authLink}
+                    onClick={closeMobile}
+                  >
+                    <span className={styles.userIcon}>
+                      <User />
+                    </span>
+                    {userEmail || 'Mi perfil'}
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className={styles.authLink}
+                  >
+                    Cerrar sesión
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+      </nav>
+    </header>
+  );
+};
