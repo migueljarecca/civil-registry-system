@@ -30,7 +30,7 @@
 /* ============ INPUT BASE ============ */
 .input {
   width: 100%;
-  height: 4.8rem;                 /* 48px - altura M3 md */
+  height: 4.8rem; /* 48px - altura M3 md */
   padding: 0 var(--space-md);
   font-family: var(--font-body);
   font-size: var(--fs-base);
@@ -59,11 +59,56 @@
   box-shadow: 0 0 0 3px var(--color-primary-light);
 }
 
-.input:disabled {
+.input:disabled,
+.input:read-only {
   background-color: var(--color-surface-hover);
   color: var(--color-text-muted);
   cursor: not-allowed;
   border-color: var(--color-border);
+}
+
+/* To prevent the focus indicator from appearing on a read-only field */
+.input:read-only:focus {
+  box-shadow: none;
+  border-color: var(--color-border);
+}
+
+/* Style for the eye */
+.hasEye {
+  padding-right: 4.4rem;
+}
+
+.fieldWrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.eyeButton {
+  position: absolute;
+  right: var(--space-sm);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  border-radius: 50%;
+}
+
+.eyeButton:hover {
+  color: var(--color-text);
+  background-color: var(--color-surface-hover);
+}
+
+.eyeButton:focus-visible {
+  outline: 2px solid var(--color-primary);
 }
 
 /* ============ ERROR ============ */

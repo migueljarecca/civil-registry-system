@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import {
-  fetchUserById,
-  clearCurrentUser,
-} from '../../../store/slices/usersSlice';
-
+import { fetchUserById, clearCurrentUser } from '../../../store/slices/usersSlice';
+import { Spinner } from '../../../components/ui/Spinner/Spinner';
+import { Alert } from '../../../components/ui/Alert/Alert';
+import styles from './ProfilePage.module.css';
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -24,44 +22,66 @@ export const ProfilePage = () => {
   }, [dispatch, userId]);
 
   if (loading && !currentUser) {
-    return <p>Cargando perfil...</p>;
+    return <Spinner centered label="Cargando perfil..." />;
   }
 
   if (error) {
-    return <div className="error-banner">{error}</div>;
+    return <Alert variant="error" title="Error al cargar el perfil">{error}</Alert>;
   }
 
   if (!currentUser) {
     return null;
   }
 
+  // Format date to "12 of October of 2023"
+  const formattedDate = new Date(currentUser.createdAt).toLocaleDateString('es-PE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
-    <div>
-      <h1>Mi perfil</h1>
+    <div className={styles.page}>
 
-      <dl>
-        <dt>Nombre</dt>
-        <dd>{currentUser.name} {currentUser.lastname}</dd>
+      {/* Header Section (Only title) */}
+      <div className={styles.header}>
+        <h1 className={styles.title}>Mis datos personales</h1>
+        <p className={styles.subtitle}>
+          Información registrada en el sistema del Registro Civil.
+        </p>
+      </div>
 
-        <dt>DNI</dt>
-        <dd>{currentUser.dni}</dd>
+      {/* Data Grid */}
+      <div className={styles.card}>
+        <dl className={styles.grid}>
 
-        <dt>Email</dt>
-        <dd>{currentUser.email}</dd>
+          <div className={styles.dataGroup}>
+            <dt className={styles.label}>Nombre</dt>
+            <dd className={styles.value}>{currentUser.name}</dd>
+          </div>
 
-        <dt>Roles</dt>
-        <dd>{currentUser.roles.join(', ')}</dd>
+          <div className={styles.dataGroup}>
+            <dt className={styles.label}>Apellido</dt>
+            <dd className={styles.value}>{currentUser.lastname}</dd>
+          </div>
 
-        <dt>Estado</dt>
-        <dd>{currentUser.enabled ? 'Activo' : 'Inactivo'}</dd>
+          <div className={styles.dataGroup}>
+            <dt className={styles.label}>DNI</dt>
+            <dd className={styles.value}>{currentUser.dni}</dd>
+          </div>
 
-        <dt>Miembro desde</dt>
-        <dd>{new Date(currentUser.createdAt).toLocaleString()}</dd>
-      </dl>
+          <div className={styles.dataGroup}>
+            <dt className={styles.label}>Correo electrónico</dt>
+            <dd className={styles.value}>{currentUser.email}</dd>
+          </div>
 
-      <Link to="/profile/edit">Editar perfil</Link>
-      {' | '}
-      <Link to="/profile/change-password">Cambiar contraseña</Link>
+          <div className={`${styles.dataGroup} ${styles.fullWidth}`}>
+            <dt className={styles.label}>Miembro desde</dt>
+            <dd className={styles.value}>{formattedDate}</dd>
+          </div>
+
+        </dl>
+      </div>
 
     </div>
   );

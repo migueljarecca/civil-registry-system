@@ -15,7 +15,7 @@ import { ServicesOverview } from "../pages/services/overview/ServicesOverview"
 import { RegisterPage } from "../pages/auth/register/RegisterPage"
 import { UserListPage } from "../pages/dashboard/users/UserListPage"
 import { ProtectedRoute } from "../components/common/ProtectedRoute"
-import { UserLayout } from "../layouts/UserProfileLayout/UserProfileLayout"
+import { UserProfileLayout } from "../layouts/UserProfileLayout/UserProfileLayout"
 import { NotFoundPage } from "../pages/shared/NotFoundPage"
 import { ProfilePage } from "../pages/user/perfil/ProfilePage"
 import { ProfileEditPage } from "../pages/user/perfil/ProfileEditPage"
@@ -34,30 +34,30 @@ export const AppRoutes = () => {
       {/* Public routes with MainLayout */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />
-          
+
         <Route path="/services" element={<ServicesPage />}>
-          <Route index element={<ServicesOverview />}/>
-          <Route path="birth" element={<BirthServicePage />}/>
-          <Route path="marriage" element={<MarriageServicePage />}/>
-          <Route path="death" element={<DeathServicePage />}/>
-          <Route path="certificates" element={<CertificatesServicePage />}/>
+          <Route index element={<ServicesOverview />} />
+          <Route path="birth" element={<BirthServicePage />} />
+          <Route path="marriage" element={<MarriageServicePage />} />
+          <Route path="death" element={<DeathServicePage />} />
+          <Route path="certificates" element={<CertificatesServicePage />} />
         </Route>
 
         <Route path="/contact" element={<ContactPage />} />
 
-        </Route>
+      </Route>
 
 
       {/* Public routes with auth */}
       <Route path="/auth" element={<AuthLayout />}>
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
-      </Route>        
+      </Route>
 
 
       {/* Protected routes with UserLayout (ROLE_USER) */}
       <Route element={<ProtectedRoute />}>
-        <Route element={<UserLayout />}>
+        <Route element={<UserProfileLayout />}>
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/edit" element={<ProfileEditPage />} />
           <Route path="/profile/change-password" element={<ChangePasswordPage />} />

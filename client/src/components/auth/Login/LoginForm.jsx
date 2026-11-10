@@ -89,7 +89,7 @@ export const LoginForm = () => {
 
       <div className={styles.footer}>
         <span className={styles.footerText}>¿No tienes cuenta?</span>
-        <Link to="/register" className={styles.footerLink}>
+        <Link to="/auth/register" className={styles.footerLink}>
           Registrate
         </Link>
       </div>

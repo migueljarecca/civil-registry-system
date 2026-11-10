@@ -1,56 +1,53 @@
-// src/layouts/UserLayout/UserLayout.jsx
-import { Outlet, Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../store/slices/authSlice';
+import { NavLink, Outlet } from 'react-router-dom';
+import { ProfileHeader } from '../../components/main/Header/ProfileHeader';
+import { Footer } from '../../components/main/Footer/Footer';
+import styles from './UserProfileLayout.module.css';
 
-import './UserProfileLayout.css';
+const menuItems = [
+  { to: '/profile', label: 'Mi perfil', end: true },
+  { to: '/profile/edit', label: 'Editar perfil' },
+  { to: '/profile/change-password', label: 'Cambiar contraseña' },
+];
 
-export const UserLayout = () => {
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  
-  const { user } = useSelector((state) => state.auth);
-
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate('/auth/login');
-  };
-
+export const UserProfileLayout = () => {
   return (
-    <div className="user-layout">
-      {/* Header */}
-      <header className="user-header">
-        <span>Hola, {user?.sub}</span>
-        <button onClick={handleLogout}>Cerrar sesión</button>
-      </header>
+    <div className={styles.layout}>
+      <ProfileHeader />
 
-      {/* Contenedor principal con sidebar izquierdo, main y sidebar derecho */}
-      <div className="user-body">
-        {/* Sidebar izquierdo */}
-        <aside className="user-sidebar-left">
-          <nav>
-            <Link to="/profile">Mi perfil</Link>
-            <Link to="/profile/edit">Editar perfil</Link>
-            <Link to="/profile/change-password">Cambiar contraseña</Link>
-          </nav>
-        </aside>
+      <div className={styles.mainWrapper}>
+        <div className={styles.container}>
 
-        {/* Main: aquí cambia el contenido */}
-        <main className="user-main">
-          <Outlet />   {/* ← Aquí se renderiza ProfilePage, ProfileEditPage, etc. */}
-        </main>
+          <aside className={styles.sidebar}>
+            <h2 className={styles.sidebarTitle}>Mi cuenta</h2>
+            <nav className={styles.nav} aria-label="Navegación de perfil">
+              <ul className={styles.navList}>
+                {menuItems.map((item) => (
+                  <li key={item.to}>
+                    <NavLink
+                      to={item.to}
+                      end={item.end}
+                      className={({ isActive }) =>
+                        isActive
+                          ? `${styles.navLink} ${styles.navLinkActive}`
+                          : styles.navLink
+                      }
+                    >
+                      {item.label}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </aside>
 
-        {/* Sidebar derecho */}
-        <aside className="user-sidebar-right">
-          {/* Widgets, info adicional, etc. */}
-        </aside>
+          <main className={styles.content}>
+            <Outlet />
+          </main>
+
+        </div>
       </div>
 
-      {/* Footer */}
-      <footer className="user-footer">
-        <p>© 2026 Civil Registry System</p>
-      </footer>
+      <Footer />
     </div>
   );
 };

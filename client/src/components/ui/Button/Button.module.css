@@ -90,24 +90,24 @@
 
 /* ============ TAMAÑOS (Opción C: 40 / 48 / 56) ============ */
 .sm {
-  height: 4rem;              /* 40px */
+  height: 4rem; /* 40px */
   padding: 0 var(--space-md);
   font-size: var(--fs-sm);
-  border-radius: 10px;       /* M3: small → radio menor */
+  border-radius: 10px; /* M3: small → radio menor */
 }
 
 .md {
-  height: 4.8rem;            /* 48px */
+  height: 4.8rem; /* 48px */
   padding: 0 var(--space-lg);
   font-size: var(--fs-base);
   border-radius: 12px;
 }
 
 .lg {
-  height: 5.6rem;            /* 56px */
+  height: 5.6rem; /* 56px */
   padding: 0 var(--space-xl);
   font-size: var(--fs-lg);
-  border-radius: 16px;       /* M3: large → radio mayor */
+  border-radius: 16px; /* M3: large → radio mayor */
 }
 
 /* ============ MODIFICADORES ============ */
@@ -130,10 +130,11 @@
 }
 
 .label {
-  position: relative;
-  z-index: 1;
   display: inline-flex;
   align-items: center;
+  gap: var(--space-sm);
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes spin {

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +8,11 @@ import {
   clearFieldError,
   clearCurrentUser,
 } from '../../../store/slices/usersSlice';
+import { Input } from '../../../components/ui/Input/Input';
+import { Button } from '../../../components/ui/Button/Button';
+import { Alert } from '../../../components/ui/Alert/Alert';
+import { Spinner } from '../../../components/ui/Spinner/Spinner';
+import styles from './ProfileEditPage.module.css';
 
 const initialForm = {
   name: '',
@@ -72,10 +76,10 @@ export const ProfileEditPage = () => {
       newErrors.lastname = 'El apellido debe tener al menos 2 caracteres';
     }
 
+    // DNI is disabled, no need to validate if it's empty (comes from backend)
+    // But we keep the validation in case the backend returns an empty string
     if (!form.dni.trim()) {
       newErrors.dni = 'El DNI es obligatorio';
-    } else if (!/^\d{8}$/.test(form.dni)) {
-      newErrors.dni = 'El DNI debe tener exactamente 8 dígitos';
     }
 
     if (!form.email.trim()) {
@@ -112,38 +116,89 @@ export const ProfileEditPage = () => {
   };
 
   if (loading && !currentUser) {
-    return <p>Cargando perfil...</p>;
+    return <Spinner centered label="Cargando datos..." />;
   }
 
   return (
-    <div>
-      <h1>Editar perfil</h1>
+    <div className={styles.page}>
 
-      {error && <div className="error-banner">{error}</div>}
+      {/* Header Section */}
+      <div className={styles.header}>
+        <h1 className={styles.title}>Editar perfil</h1>
+        <p className={styles.subtitle}>
+          Actualiza tu información personal.
+        </p>
+      </div>
 
-      <form onSubmit={onSubmit} noValidate>
-        <label>Nombre</label>
-        <input name="name" value={form.name} onChange={onInputChange} />
-        {getFieldError('name') && <span className="field-error">{getFieldError('name')}</span>}
+      {error && (
+        <Alert variant="error" title="Error al guardar">
+          {error}
+        </Alert>
+      )}
 
-        <label>Apellido</label>
-        <input name="lastname" value={form.lastname} onChange={onInputChange} />
-        {getFieldError('lastname') && <span className="field-error">{getFieldError('lastname')}</span>}
+      <form className={styles.form} onSubmit={onSubmit} noValidate>
 
-        <label>DNI</label>
-        <input name="dni" value={form.dni} onChange={onInputChange} readOnly />
-        {getFieldError('dni') && <span className="field-error">{getFieldError('dni')}</span>}
+        <div className={styles.row}>
+          <Input
+            label="Nombre"
+            name="name"
+            value={form.name}
+            onChange={onInputChange}
+            disabled={loading}
+            error={getFieldError('name')}
+            autoComplete="given-name"
+          />
+          <Input
+            label="Apellido"
+            name="lastname"
+            value={form.lastname}
+            onChange={onInputChange}
+            disabled={loading}
+            error={getFieldError('lastname')}
+            autoComplete="family-name"
+          />
+        </div>
 
-        <label>Email</label>
-        <input type="email" name="email" value={form.email} onChange={onInputChange} />
-        {getFieldError('email') && <span className="field-error">{getFieldError('email')}</span>}
+        <div className={styles.row}>
+          <Input
+            label="DNI"
+            name="dni"
+            value={form.dni}
+            disabled
+            hint="El DNI no puede ser modificado desde aquí."
+          />
+          <Input
+            label="Correo electrónico"
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={onInputChange}
+            disabled={loading}
+            error={getFieldError('email')}
+            autoComplete="email"
+          />
+        </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? 'Guardando...' : 'Guardar cambios'}
-        </button>   
-        <button type="button" onClick={() => navigate('/profile')}>
-          Cancelar
-        </button>
+        <div className={styles.actions}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="lg"
+            onClick={() => navigate('/profile')}
+            disabled={loading}
+          >
+            Cancelar
+          </Button>
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            loading={loading}
+          >
+            {loading ? 'Guardando...' : 'Guardar cambios'}
+          </Button>
+        </div>
+
       </form>
     </div>
   );

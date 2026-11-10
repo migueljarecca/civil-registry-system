@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {
-  changePasswordThunk,
-  clearUsersError,
-} from '../../../store/slices/usersSlice';
+import { changePasswordThunk, clearUsersError, clearFieldError } from '../../../store/slices/usersSlice';
+import { Input } from '../../../components/ui/Input/Input';
+import { Button } from '../../../components/ui/Button/Button';
+import { Alert } from '../../../components/ui/Alert/Alert';
+import styles from './ChangePasswordPage.module.css';
 
 const initialForm = {
   currentPassword: '',
@@ -13,10 +14,10 @@ const initialForm = {
 };
 
 export const ChangePasswordPage = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { user } = useSelector((state) => state.auth);
   const { loading, error, fieldErrors } = useSelector((state) => state.users);
 
   const [form, setForm] = useState(initialForm);
@@ -27,7 +28,15 @@ export const ChangePasswordPage = () => {
     const { name, value } = target;
     setForm({ ...form, [name]: value });
     setLocalErrors((prev) => ({ ...prev, [name]: '' }));
-    if (error) dispatch(clearUsersError());
+
+    // Clear backend field errors if the user starts typing
+    if (fieldErrors) {
+      dispatch(clearFieldError(name));
+    }
+    // Clear general backend error
+    if (error) {
+      dispatch(clearUsersError());
+    }
   };
 
   const validate = () => {
@@ -71,6 +80,7 @@ export const ChangePasswordPage = () => {
 
     const result = await dispatch(
       changePasswordThunk({
+        id: user.userId,
         currentPassword: form.currentPassword,
         newPassword: form.newPassword,
       })
@@ -82,61 +92,110 @@ export const ChangePasswordPage = () => {
     }
   };
 
-  return (
-    <div>
-      <h1>Cambiar contraseña</h1>
+  // Success state view
+  if (success) {
+    return (
+      <div className={styles.successContainer}>
+        <div className={styles.successIcon}>✓</div>
+        <h1 className={styles.successTitle}>Contraseña actualizada</h1>
+        <p className={styles.successSubtitle}>
+          Tu contraseña se cambio correctamente.
+        </p>
 
-      {success && (
-        <div className="success-banner">
-          Contraseña cambiada correctamente.
-        </div>
+        {/* Botón para volver manualmente */}
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={() => navigate('/profile')}
+          style={{ marginTop: 'var(--space-md)' }}
+        >
+          Volver a mi perfil
+        </Button>
+
+      </div>
+    );
+  }
+
+  // Main form view
+  return (
+    <div className={styles.page}>
+
+      {/* Header Section */}
+      <div className={styles.header}>
+        <h1 className={styles.title}>Cambiar contraseña</h1>
+        <p className={styles.subtitle}>
+          Por seguridad, ingresa tu contraseña actual antes de crear una nueva.
+        </p>
+      </div>
+
+      {error && (
+        <Alert variant="error" title="Error al cambiar la contraseña">
+          {error}
+        </Alert>
       )}
 
-      {error && <div className="error-banner">{error}</div>}
+      <form className={styles.form} onSubmit={onSubmit} noValidate>
 
-      <form onSubmit={onSubmit} noValidate>
-        <label>Contraseña actual</label>
-        <input
-          type="password"
-          name="currentPassword"
-          value={form.currentPassword}
-          onChange={onInputChange}
-          disabled={loading}
-        />
-        {getFieldError('currentPassword') && (
-          <span className="field-error">{getFieldError('currentPassword')}</span>
-        )}
+        <div className={styles.fullWidth}>
+          <Input
+            label="Contraseña actual"
+            type="password"
+            name="currentPassword"
+            value={form.currentPassword}
+            onChange={onInputChange}
+            disabled={loading}
+            error={getFieldError('currentPassword')}
+            autoComplete="current-password"
+            placeholder="••••••••"
+          />
+        </div>
 
-        <label>Nueva contraseña</label>
-        <input
-          type="password"
-          name="newPassword"
-          value={form.newPassword}
-          onChange={onInputChange}
-          disabled={loading}
-        />
-        {getFieldError('newPassword') && (
-          <span className="field-error">{getFieldError('newPassword')}</span>
-        )}
+        <div className={styles.row}>
+          <Input
+            label="Nueva contraseña"
+            type="password"
+            name="newPassword"
+            value={form.newPassword}
+            onChange={onInputChange}
+            disabled={loading}
+            error={getFieldError('newPassword')}
+            hint="Mínimo 8 caracteres."
+            autoComplete="new-password"
+            placeholder="••••••••"
+          />
+          <Input
+            label="Confirmar nueva contraseña"
+            type="password"
+            name="confirmPassword"
+            value={form.confirmPassword}
+            onChange={onInputChange}
+            disabled={loading}
+            error={getFieldError('confirmPassword')}
+            autoComplete="new-password"
+            placeholder="••••••••"
+          />
+        </div>
 
-        <label>Confirmar nueva contraseña</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          value={form.confirmPassword}
-          onChange={onInputChange}
-          disabled={loading}
-        />
-        {getFieldError('confirmPassword') && (
-          <span className="field-error">{getFieldError('confirmPassword')}</span>
-        )}
+        <div className={styles.actions}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="lg"
+            onClick={() => navigate('/profile')}
+            disabled={loading}
+          >
+            Cancelar
+          </Button>
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            loading={loading}
+          >
+            {loading ? 'Actualizando...' : 'Cambiar contraseña'}
+          </Button>
+        </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? 'Cambiando...' : 'Cambiar contraseña'}
-        </button>
-        <button type="button" onClick={() => navigate('/profile')}>
-          Cancelar
-        </button>
       </form>
     </div>
   );
