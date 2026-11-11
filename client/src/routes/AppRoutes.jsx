@@ -70,13 +70,20 @@ export const AppRoutes = () => {
         <Route element={<DashboardLayout />}>
           <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="/admin/dashboard" element={<DashboardPage />} />
+
+          {/* Users */}
           <Route path="/admin/users" element={<UserListPage />} />
           <Route path="/admin/users/new" element={<UserFormPage />} />
           <Route path="/admin/users/:id" element={<UserDetailPage />} />
           <Route path="/admin/users/:id/edit" element={<UserFormPage />} />
+
+          {/* Citizens */}
+          {/* <Route path="/admin/citizens" element={<CitizenListPage />} />
+          <Route path="/admin/citizens/new" element={<CitizenFormPage />} />
+          <Route path="/admin/citizens/:id" element={<CitizenDetailPage />} />
+          <Route path="/admin/citizens/:id/edit" element={<CitizenFormPage />} /> */}
         </Route>
       </Route>
-
 
       {/* 403 - Access denied */}
       <Route path="/403" element={<ForbiddenPage />} />

@@ -1,42 +1,38 @@
-// src/layouts/DashboardLayout/DashboardLayout.jsx
-import { Outlet, Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../store/slices/authSlice';
+import { Outlet } from 'react-router-dom';
+import { AdminSidebar } from '../../components/main/Sidebar/AdminSidebar';
+import styles from './DashboardLayout.module.css';
+import { AdminTopbar } from '../../components/main/Header/AdminTopbar';
+import { useState } from 'react';
 
 export const DashboardLayout = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
 
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate('/auth/login');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
+
   return (
-    <div className="admin-layout">
-      <header className="admin-header">
-        <span>Admin - {user?.sub}</span>
-        <button onClick={handleLogout}>Cerrar sesión</button>
-      </header>
+    <div className={styles.layout}>
+      <AdminSidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
 
-      <div className="admin-body">
-        <aside className="admin-sidebar">
-          <nav>
-            <Link to="/admin/dashboard">Dashboard</Link>
-            <Link to="/admin/users">Usuarios</Link>
-            {/* más opciones de admin */}
-          </nav>
-        </aside>
+      {/* If the sidebar is open on mobile, we place a dark overlay behind it. */}
+      {isSidebarOpen && (
+        <div className={styles.overlay} onClick={closeSidebar} aria-hidden="true" />
+      )}
 
-        <main className="admin-main">
-          <Outlet />   {/* ← Aquí se renderiza DashboardPage, UserListPage, etc. */}
+      <div className={styles.mainWrapper}>
+        <AdminTopbar onMenuClick={toggleSidebar} />
+
+        <main className={styles.content}>
+          <Outlet />
         </main>
       </div>
-
-      <footer className="admin-footer">
-        <p>© 2026 Civil Registry System - Admin</p>
-      </footer>
     </div>
   );
 };
