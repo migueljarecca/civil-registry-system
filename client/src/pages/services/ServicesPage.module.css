@@ -77,7 +77,16 @@
 .sidebar {
   align-self: start;
   position: sticky;
-  top: var(--space-lg);
+
+  top: calc(var(--public-header-height) + var(--space-lg));
+
+  max-height: calc(100vh - var(--public-header-height) - var(--space-2xl));
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* Hide the scroll bar in Chrome/Safari */
 }
 
 .sidebarNav {
@@ -101,7 +110,10 @@
   color: var(--color-text-muted);
   border-left: 4px solid transparent;
   border-bottom: 1px solid var(--color-border);
-  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .sidebarList li:last-child .sidebarLink {
@@ -142,5 +154,8 @@
 
   .sidebar {
     position: static;
+    top: auto;
+    max-height: none;
+    overflow-y: visible;
   }
 }
