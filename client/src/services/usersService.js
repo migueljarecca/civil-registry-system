@@ -1,4 +1,3 @@
-
 import axiosClient from '../api/Axios';
 
 export const getAllUsers = async () => {
@@ -12,6 +11,7 @@ export const getUserById = async (id) => {
 };
 
 export const createUser = async (userData) => {
+  console.log('Creating user with data:', userData);
   const { data } = await axiosClient.post('/users', userData);
   return data;
 };

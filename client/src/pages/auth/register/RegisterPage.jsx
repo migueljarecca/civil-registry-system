@@ -109,7 +109,6 @@ export const RegisterPage = () => {
         password: form.password,
       })
     );
-
     if (registerUser.fulfilled.match(result)) {
       setSuccess(true);
       setForm(initialForm);
