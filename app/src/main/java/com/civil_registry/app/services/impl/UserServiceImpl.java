@@ -36,7 +36,9 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, 
+                            RoleRepository roleRepository, 
+                            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -74,7 +76,8 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto fetchUser(Long id) {
 
         User user = userRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("User", "id", String.valueOf(id))
+            () -> new ResourceNotFoundException(
+                "User", "id", String.valueOf(id))
         );
 
         UserResponseDto userResponseDto = UserMapper.toUserResponseDto(user);
@@ -104,14 +107,28 @@ public class UserServiceImpl implements UserService {
         validateDniNotTaken(user.getDni(), null);
         validateEmailNotTaken(normalizedEmail, null);
 
-        Role existingRole = roleRepository.findByRolName("ROLE_USER")
-                .orElseThrow(() -> 
-                        new ResourceNotFoundException("Role", "rolName", "ROLE_USER")
-        );
+        user.setEnabled(userCreateDto.getEnabled() != null ? userCreateDto.getEnabled() : true);
 
-        Set<Role> roles = new HashSet<>();
-        roles.add(existingRole);
-        user.setRoles(roles);
+        // ROLES
+        Set<Role> rolesToAssign = new HashSet<>();
+        
+        if (userCreateDto.getRoles() != null && !userCreateDto.getRoles().isEmpty()) {
+            // If the admin sent roles, we look them up in the database.
+            for (String roleName : userCreateDto.getRoles()) {
+                Role role = roleRepository.findByRolName(roleName)
+                        .orElseThrow(() -> new ResourceNotFoundException(
+                            "Role", "rolName", roleName));
+                rolesToAssign.add(role);
+            }
+        } else {
+            // If no roles were submitted (public registration), we assign ROLE_USER by default.
+            Role defaultRole = roleRepository.findByRolName("ROLE_USER")
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                        "Role", "rolName", "ROLE_USER"));
+            rolesToAssign.add(defaultRole);
+        }
+
+        user.setRoles(rolesToAssign);
 
         User savedUser = userRepository.save(user);
 
@@ -131,7 +148,8 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto updateUser(Long id, UserUpdateDto userUpdateDto) {
 
     User user = userRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("User", "id", String.valueOf(id)));
+            .orElseThrow(() -> new ResourceNotFoundException(
+                "User", "id", String.valueOf(id)));
 
     String normalizedEmail = normalizeEmail(userUpdateDto.getEmail());
 
@@ -158,7 +176,8 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> 
-                        new ResourceNotFoundException("User", "id", String.valueOf(id)));
+                        new ResourceNotFoundException(
+                            "User", "id", String.valueOf(id)));
 
         userRepository.delete(user);
 
@@ -176,7 +195,8 @@ public class UserServiceImpl implements UserService {
     public ResetPasswordResponseDto resetPassword(Long id) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", String.valueOf(id)));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                    "User", "id", String.valueOf(id)));
 
         String temporaryPassword = generateTemporaryPassword();
 
@@ -201,7 +221,8 @@ public class UserServiceImpl implements UserService {
     public void changePassword(Long userId, ChangePasswordDto changePasswordDto) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", String.valueOf(userId)));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                    "User", "id", String.valueOf(userId)));
 
         if (!passwordEncoder.matches(changePasswordDto.getCurrentPassword(), user.getPassword())) {
             throw new InvalidPasswordException("Current password is incorrect");

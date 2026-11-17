@@ -1,5 +1,7 @@
 package com.civil_registry.app.auth.services;
 
+import java.util.Set;
+
 import org.springframework.stereotype.Service;
 
 import com.civil_registry.app.auth.dto.RegisterDto;
@@ -23,7 +25,10 @@ public class AuthService {
                 registerDto.getLastname(),
                 registerDto.getDni(),
                 registerDto.getEmail(),
-                registerDto.getPassword()
+                registerDto.getPassword(),
+                
+                true,
+                Set.of("ROLE_USER")
         );
 
         return userService.createUser(createDto);

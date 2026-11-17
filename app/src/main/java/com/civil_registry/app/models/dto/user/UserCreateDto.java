@@ -1,5 +1,7 @@
 package com.civil_registry.app.models.dto.user;
 
+import java.util.Set;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -27,16 +29,21 @@ public class UserCreateDto {
     @NotBlank(message = "Password is required")
     @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")    
     private String password;
+
+    private Boolean enabled;
+    private Set<String> roles;
     
     public UserCreateDto() {
     }
 
-    public UserCreateDto(String name, String lastname, String dni, String email, String password) {
+    public UserCreateDto(String name, String lastname, String dni, String email, String password, Boolean enabled, Set<String> roles) {
         this.name = name;
         this.lastname = lastname;
         this.dni = dni;
         this.email = email;
         this.password = password;
+        this.enabled = enabled;
+        this.roles = roles;
     }
 
     public String getName() {
@@ -79,10 +86,26 @@ public class UserCreateDto {
         this.password = password;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "UserCreateDto [name=" + name + ", lastname=" + lastname + ", dni=" + dni + ", email=" + email
-                + ", password=" + password + "]";
+                + ", password=" + password + ", enabled=" + enabled + ", roles=" + roles + "]";
     }
 
 }
