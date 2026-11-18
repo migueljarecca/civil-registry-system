@@ -2,9 +2,7 @@ package com.civil_registry.app.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.civil_registry.app.exception.common.ResourceAlreadyExistsException;
@@ -19,108 +17,77 @@ import com.civil_registry.app.services.CitizenService;
 @Service
 public class CitizenServiceImpl implements CitizenService {
 
-    @Autowired
-    private CitizenRepository citizenRepository;
+    private final CitizenRepository citizenRepository;
 
-    /**
-     * @return List of all citizens
-     */
+    public CitizenServiceImpl(CitizenRepository citizenRepository) {
+        this.citizenRepository = citizenRepository;
+    }
+
     @Override
     public List<CitizenResponseDto> fetchAllCitizens() {
-
         List<Citizen> citizens = citizenRepository.findAll();
-
         List<CitizenResponseDto> response = new ArrayList<>();
 
         for (Citizen citizen : citizens) {
-            response.add(CitizenMapper.toCitizenResponseDto(citizen));
+            response.add(CitizenMapper.toResponseDto(citizen));
         }
-
         return response;
     }
 
-    /**
-     * @param id - input id
-     * @return Citizen details based on a given id
-     */
     @Override
     public CitizenResponseDto fetchCitizen(Long id) {
-
-        Citizen citizen = citizenRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("Citizen", "id", String.valueOf(id))
-        );
-
-        CitizenResponseDto citizenResponseDto = CitizenMapper.toCitizenResponseDto(citizen);
-
-        return citizenResponseDto;
-    }
-
-    /**
-     *
-     * @param citizenCreateDto -Citizen Object
-     * @return the new citizen details
-     */
-    @Override
-    public void createCitizen(CitizenCreateDto citizenCreateDto) {
+        Citizen citizen = citizenRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                    "Citizen", "id", String.valueOf(id)));
         
-        Citizen citizen = CitizenMapper.createCitizenFromDto(citizenCreateDto);
-
-        Optional<Citizen> opCitizen = citizenRepository.findByDni(citizen.getDni());
-
-        if (opCitizen.isPresent()) {
-            throw new ResourceAlreadyExistsException("Citizen with DNI " + citizen.getDni() + " already exists");
-        }
-
-        citizenRepository.save(citizen);
+        return CitizenMapper.toResponseDto(citizen);
     }
 
-    /**
-     *
-     * @param citizenCreateDto - CitizenCreateDto Object
-     * @return boolean indicating if the update of citizen details is successful or not
-     */
     @Override
-    public boolean updateCitizen(Long id, CitizenCreateDto citizenCreateDto) {
+    public CitizenResponseDto createCitizen(CitizenCreateDto citizenCreateDto) {
         
-        Citizen citizen = citizenRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("Citizen", "id", String.valueOf(id))
-        );
+        validateDniNotTaken(citizenCreateDto.getDni(), null);
 
-        Optional<Citizen> existingCitizen = citizenRepository.findByDni(citizenCreateDto.getDni());
+        Citizen citizen = CitizenMapper.toEntity(citizenCreateDto);
+        Citizen savedCitizen = citizenRepository.save(citizen);
 
-        if (existingCitizen.isPresent() 
-            && !existingCitizen.get().getId().equals(id)) {
-
-                throw new ResourceAlreadyExistsException(
-                    "Citizen with dni " 
-                    + citizenCreateDto.getDni() 
-                    + " already exists");
-        }
-
-        CitizenMapper.updateCitizenFromDto(citizen, citizenCreateDto);
-
-        citizenRepository.save(citizen);
-
-        return true;
+        return CitizenMapper.toResponseDto(savedCitizen);
     }
 
-
-    /**
-     * @param id - Input Id
-     * @return boolean indicating if the delete of citizen details is successful or not
-    */
     @Override
-    public boolean deleteCitizen(Long id) {
+    public CitizenResponseDto updateCitizen(Long id, CitizenCreateDto citizenCreateDto) {
+        
+        Citizen citizen = citizenRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                    "Citizen", "id", String.valueOf(id)));
 
-        Citizen citizen = citizenRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("Citizen", "id", String.valueOf(id))
-        );
+        validateDniNotTaken(citizenCreateDto.getDni(), id);
 
+        CitizenMapper.updateEntity(citizen, citizenCreateDto);
+
+        Citizen updatedCitizen = citizenRepository.save(citizen);
+        
+        return CitizenMapper.toResponseDto(updatedCitizen);
+    }
+
+    @Override
+    public void deleteCitizen(Long id) {
+        Citizen citizen = citizenRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                    "Citizen", "id", String.valueOf(id)));
+        
         citizenRepository.delete(citizen);
-        
-        return true;
     }
 
-    
-    
+    // ==========================================
+    // Private validation helpers
+    // ==========================================
+
+    private void validateDniNotTaken(String dni, Long excludeCitizenId) {
+        citizenRepository.findByDni(dni).ifPresent(existing -> {
+            if (excludeCitizenId == null || !existing.getId().equals(excludeCitizenId)) {
+                throw new ResourceAlreadyExistsException("Citizen with DNI " + dni + " already exists.");
+            }
+        });
+    }
 }

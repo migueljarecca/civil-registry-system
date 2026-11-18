@@ -7,38 +7,13 @@ import com.civil_registry.app.models.dto.citizen.CitizenResponseDto;
 
 public interface CitizenService {
 
-    /**
-     * 
-     * @return List of all citizens
-     */
     List<CitizenResponseDto> fetchAllCitizens();
 
-    
-    /**
-     * @param id - input id
-     * @return Citizen details based on a given id.
-     */
     CitizenResponseDto fetchCitizen(Long id);
 
-    
-    /**
-     * @param citizenCreateDto - citizenCreateDto Object
-     */
-    void createCitizen(CitizenCreateDto citizenCreateDto);
-    
+    CitizenResponseDto createCitizen(CitizenCreateDto citizenCreateDto);
 
-    /**
-     *
-     * @param citizenCreateDto Object
-     * @return boolean indicating if the update of citizen details if successful or not
-     */
-    boolean updateCitizen(Long id, CitizenCreateDto citizenCreateDto);
+    CitizenResponseDto updateCitizen(Long id, CitizenCreateDto citizenCreateDto);
 
-
-    /**
-     *
-     * @param id - Input id
-     * @return boolean indicating if the delete of Citizen details is successful or not
-     */
-    boolean deleteCitizen(Long id);
+    void deleteCitizen(Long id);
 }

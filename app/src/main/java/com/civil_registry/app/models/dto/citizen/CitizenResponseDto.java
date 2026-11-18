@@ -6,17 +6,17 @@ import java.time.LocalDateTime;
 import com.civil_registry.app.enums.Gender;
 
 public record CitizenResponseDto(
-    Long id,
-    String dni,
-    String name,
-    String fatherLastName,
-    String motherLastName,
-    LocalDate birthDate,
-    Gender gender,
+        Long id,
+        String name,
+        String lastname,
+        String motherLastname,
+        String dni,
+        LocalDate birthDate,
+        Gender gender,
 
-    LocalDateTime createdAt,
-    String createdBy,
-    LocalDateTime updatedAt,
-    String updatedBy
+        LocalDateTime createdAt,
+        String createdBy,
+        LocalDateTime updatedAt,
+        String updatedBy
 ) {
 }

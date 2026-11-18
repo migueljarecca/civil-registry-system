@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.civil_registry.app.enums.Gender;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -11,34 +12,48 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "citizens")
+@Table(name = "citizens", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "dni")
+})
 public class Citizen extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String dni;
+    @Column(nullable = false, length = 50)
     private String name;
-    private String fatherLastName;
-    private String motherLastName;
+
+    @Column(nullable = false, length = 50)
+    private String lastname;
+
+    @Column(nullable = false, length = 50)
+    private String motherLastname;
+
+    @Column(nullable = false, unique = true, length = 8)
+    private String dni;
+
+    @Column(nullable = false)
     private LocalDate birthDate;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
     private Gender gender;
-    
+
 
     public Citizen() {
     }
 
-    public Citizen(Long id, String dni, String name, String fatherLastName, String motherLastName, LocalDate birthDate, Gender gender) {
+    public Citizen(Long id, String name, String lastname, String motherLastname, 
+                    String dni, LocalDate birthDate, Gender gender) {
         this.id = id;
-        this.dni = dni;
         this.name = name;
-        this.fatherLastName = fatherLastName;
-        this.motherLastName = motherLastName;
+        this.lastname = lastname;
+        this.motherLastname = motherLastname;
+        this.dni = dni;
         this.birthDate = birthDate;
         this.gender = gender;
     }
@@ -51,14 +66,6 @@ public class Citizen extends BaseEntity {
         this.id = id;
     }
 
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
     public String getName() {
         return name;
     }
@@ -67,20 +74,28 @@ public class Citizen extends BaseEntity {
         this.name = name;
     }
 
-    public String getFatherLastName() {
-        return fatherLastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setFatherLastName(String fatherLastName) {
-        this.fatherLastName = fatherLastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public String getMotherLastName() {
-        return motherLastName;
+    public String getMotherLastname() {
+        return motherLastname;
     }
 
-    public void setMotherLastName(String motherLastName) {
-        this.motherLastName = motherLastName;
+    public void setMotherLastname(String motherLastname) {
+        this.motherLastname = motherLastname;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public LocalDate getBirthDate() {
@@ -97,20 +112,7 @@ public class Citizen extends BaseEntity {
 
     public void setGender(Gender gender) {
         this.gender = gender;
-    }
-
-    @Override
-    public String toString() {
-        return "Citizen{" +
-                "id=" + id +
-                ", dni='" + dni + '\'' +
-                ", name='" + name + '\'' +
-                ", fatherLastName='" + fatherLastName + '\'' +
-                ", motherLastName='" + motherLastName + '\'' +
-                ", birthDate=" + birthDate +
-                ", gender=" + gender +
-                '}';
-    }
+    }   
 
 }
 

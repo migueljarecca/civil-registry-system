@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.civil_registry.app.models.entities.Citizen;
 
 @Repository
-public interface CitizenRepository extends JpaRepository<Citizen, Long>{
-
-    public Optional<Citizen> findByDni(String dni);
+public interface CitizenRepository extends JpaRepository<Citizen, Long> {
+    Optional<Citizen> findByDni(String dni);
 }

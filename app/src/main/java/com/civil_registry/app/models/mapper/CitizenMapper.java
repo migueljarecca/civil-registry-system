@@ -5,50 +5,42 @@ import com.civil_registry.app.models.dto.citizen.CitizenResponseDto;
 import com.civil_registry.app.models.entities.Citizen;
 
 public class CitizenMapper {
-    
-    public static Citizen createCitizenFromDto(CitizenCreateDto citizenCreateDto) {
-    
+
+    public static Citizen toEntity(CitizenCreateDto dto) {
         Citizen citizen = new Citizen();
-
-        citizen.setDni(citizenCreateDto.getDni());
-        citizen.setName(citizenCreateDto.getName());
-        citizen.setFatherLastName(citizenCreateDto.getFatherLastName());
-        citizen.setMotherLastName(citizenCreateDto.getMotherLastName());
-        citizen.setBirthDate(citizenCreateDto.getBirthDate());
-        citizen.setGender(citizenCreateDto.getGender());
-
+        citizen.setName(dto.getName());
+        citizen.setLastname(dto.getLastname());
+        citizen.setMotherLastname(dto.getMotherLastname());
+        citizen.setDni(dto.getDni());
+        citizen.setBirthDate(dto.getBirthDate());
+        citizen.setGender(dto.getGender());
         return citizen;
     }
 
-
-    public static void updateCitizenFromDto(Citizen citizen, CitizenCreateDto dto) {
-
-        citizen.setDni(dto.getDni());
+    public static void updateEntity(Citizen citizen, CitizenCreateDto dto) {
         citizen.setName(dto.getName());
-        citizen.setFatherLastName(dto.getFatherLastName());
-        citizen.setMotherLastName(dto.getMotherLastName());
+        citizen.setLastname(dto.getLastname());
+        citizen.setMotherLastname(dto.getMotherLastname());
+        citizen.setDni(dto.getDni());
         citizen.setBirthDate(dto.getBirthDate());
         citizen.setGender(dto.getGender());
+    }    
 
-    }
+    public static CitizenResponseDto toResponseDto(Citizen citizen) {
+        return new CitizenResponseDto(
+            
+                citizen.getId(),
+                citizen.getName(),
+                citizen.getLastname(),
+                citizen.getMotherLastname(),
+                citizen.getDni(),
+                citizen.getBirthDate(),
+                citizen.getGender(),
 
-    public static CitizenResponseDto toCitizenResponseDto(Citizen citizen) {
-    
-        CitizenResponseDto citizenResponseDto = new CitizenResponseDto(
-            citizen.getId(),
-            citizen.getDni(),
-            citizen.getName(),
-            citizen.getFatherLastName(),
-            citizen.getMotherLastName(),
-            citizen.getBirthDate(),
-            citizen.getGender(),
-
-            citizen.getCreatedAt(),
-            citizen.getCreatedBy(),
-            citizen.getUpdatedAt(),
-            citizen.getUpdatedBy()  
+                citizen.getCreatedAt(),
+                citizen.getCreatedBy(),
+                citizen.getUpdatedAt(),
+                citizen.getUpdatedBy()
         );
-
-        return citizenResponseDto;
     }
 }
