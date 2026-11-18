@@ -8,8 +8,10 @@ public class CitizenMapper {
 
     public static Citizen toEntity(CitizenCreateDto dto) {
         Citizen citizen = new Citizen();
-        citizen.setName(dto.getName());
-        citizen.setLastname(dto.getLastname());
+        citizen.setFirstName(dto.getFirstName());
+        citizen.setSecondName(dto.getSecondName());
+        citizen.setThirdName(dto.getThirdName());
+        citizen.setFatherLastname(dto.getFatherLastname());
         citizen.setMotherLastname(dto.getMotherLastname());
         citizen.setDni(dto.getDni());
         citizen.setBirthDate(dto.getBirthDate());
@@ -18,8 +20,10 @@ public class CitizenMapper {
     }
 
     public static void updateEntity(Citizen citizen, CitizenCreateDto dto) {
-        citizen.setName(dto.getName());
-        citizen.setLastname(dto.getLastname());
+        citizen.setFirstName(dto.getFirstName());
+        citizen.setSecondName(dto.getSecondName());
+        citizen.setThirdName(dto.getThirdName());
+        citizen.setFatherLastname(dto.getFatherLastname());
         citizen.setMotherLastname(dto.getMotherLastname());
         citizen.setDni(dto.getDni());
         citizen.setBirthDate(dto.getBirthDate());
@@ -30,8 +34,10 @@ public class CitizenMapper {
         return new CitizenResponseDto(
             
                 citizen.getId(),
-                citizen.getName(),
-                citizen.getLastname(),
+                citizen.getFirstName(),
+                citizen.getSecondName(),
+                citizen.getThirdName(),
+                citizen.getFatherLastname(),
                 citizen.getMotherLastname(),
                 citizen.getDni(),
                 citizen.getBirthDate(),

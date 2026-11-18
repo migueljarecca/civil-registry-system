@@ -12,13 +12,20 @@ import jakarta.validation.constraints.Size;
 
 public class CitizenCreateDto {
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "First name is required")
     @Size(max = 50)
-    private String name;
+    private String firstName;
 
-    @NotBlank(message = "Lastname is required")
+    @NotBlank(message = "Second name is required")
     @Size(max = 50)
-    private String lastname;
+    private String secondName;
+
+    @Size(max = 50)
+    private String thirdName;
+
+    @NotBlank(message = "Father lastname is required")
+    @Size(max = 50)
+    private String fatherLastname;
 
     @NotBlank(message = "Mother lastname is required")
     @Size(max = 50)
@@ -35,16 +42,23 @@ public class CitizenCreateDto {
     @NotNull(message = "Gender is required")
     private Gender gender;
 
-
-    public String getName() {
-        return name;
+    
+    public CitizenCreateDto() {
     }
 
 
-    public CitizenCreateDto( String name, String lastname, String motherLastname, 
-                                String dni, LocalDate birthDate, Gender gender) {
-        this.name = name;
-        this.lastname = lastname;
+    public CitizenCreateDto(String firstName,
+            String secondName,
+            String thirdName,
+            String fatherLastname,
+            String motherLastname,
+            String dni,
+            LocalDate birthDate,
+            Gender gender) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.thirdName = thirdName;
+        this.fatherLastname = fatherLastname;
         this.motherLastname = motherLastname;
         this.dni = dni;
         this.birthDate = birthDate;
@@ -52,18 +66,43 @@ public class CitizenCreateDto {
     }
 
 
-    public void setName(String name) {
-        this.name = name;
+    public String getFirstName() {
+        return firstName;
     }
 
 
-    public String getLastname() {
-        return lastname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public String getSecondName() {
+        return secondName;
+    }
+
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+
+    public String getThirdName() {
+        return thirdName;
+    }
+
+
+    public void setThirdName(String thirdName) {
+        this.thirdName = thirdName;
+    }
+
+
+    public String getFatherLastname() {
+        return fatherLastname;
+    }
+
+
+    public void setFatherLastname(String fatherLastname) {
+        this.fatherLastname = fatherLastname;
     }
 
 
@@ -104,7 +143,6 @@ public class CitizenCreateDto {
 
     public void setGender(Gender gender) {
         this.gender = gender;
-    }
+    } 
 
-    
 }

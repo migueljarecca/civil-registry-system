@@ -7,8 +7,10 @@ import com.civil_registry.app.enums.Gender;
 
 public record CitizenResponseDto(
         Long id,
-        String name,
-        String lastname,
+        String firstName,
+        String secondName,
+        String thirdName,
+        String fatherLastname,
         String motherLastname,
         String dni,
         LocalDate birthDate,

@@ -25,10 +25,16 @@ public class Citizen extends BaseEntity {
     private Long id;
 
     @Column(nullable = false, length = 50)
-    private String name;
+    private String firstName;
 
     @Column(nullable = false, length = 50)
-    private String lastname;
+    private String secondName;
+
+    @Column(length = 50)
+    private String thirdName;
+
+    @Column(nullable = false, length = 50)
+    private String fatherLastname;
 
     @Column(nullable = false, length = 50)
     private String motherLastname;
@@ -47,73 +53,109 @@ public class Citizen extends BaseEntity {
     public Citizen() {
     }
 
-    public Citizen(Long id, String name, String lastname, String motherLastname, 
-                    String dni, LocalDate birthDate, Gender gender) {
+
+    public Citizen(Long id, String firstName, String secondName, String thirdName, String fatherLastname,
+            String motherLastname, String dni, LocalDate birthDate, Gender gender) {
         this.id = id;
-        this.name = name;
-        this.lastname = lastname;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.thirdName = thirdName;
+        this.fatherLastname = fatherLastname;
         this.motherLastname = motherLastname;
         this.dni = dni;
         this.birthDate = birthDate;
         this.gender = gender;
     }
+
 
     public Long getId() {
         return id;
     }
 
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
+
+
+    public String getThirdName() {
+        return thirdName;
+    }
+
+
+    public void setThirdName(String thirdName) {
+        this.thirdName = thirdName;
+    }
+
+
+    public String getFatherLastname() {
+        return fatherLastname;
+    }
+
+
+    public void setFatherLastname(String fatherLastname) {
+        this.fatherLastname = fatherLastname;
+    }
+
 
     public String getMotherLastname() {
         return motherLastname;
     }
 
+
     public void setMotherLastname(String motherLastname) {
         this.motherLastname = motherLastname;
     }
+
 
     public String getDni() {
         return dni;
     }
 
+
     public void setDni(String dni) {
         this.dni = dni;
     }
+
 
     public LocalDate getBirthDate() {
         return birthDate;
     }
 
+
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
+
 
     public Gender getGender() {
         return gender;
     }
 
+
     public void setGender(Gender gender) {
         this.gender = gender;
-    }   
+    }
 
 }
-
 
