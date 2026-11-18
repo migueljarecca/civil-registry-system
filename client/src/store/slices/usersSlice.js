@@ -9,86 +9,7 @@ import {
   resetUserPassword,
 } from '../../services/usersService';
 
-// Thunks
-export const fetchAllUsers = createAsyncThunk(
-  'users/fetchAll',
-  async (_, { rejectWithValue }) => {
-    try {
-      return await getAllUsers();
-    } catch (error) {
-      return rejectWithValue(extractErrorMessage(error));
-    }
-  }
-);
-
-export const fetchUserById = createAsyncThunk(
-  'users/fetchById',
-  async (id, { rejectWithValue }) => {
-    try {
-      return await getUserById(id);
-    } catch (error) {
-      return rejectWithValue(extractErrorMessage(error));
-    }
-  }
-);
-
-export const createUserThunk = createAsyncThunk(
-  'users/create',
-  async (userData, { rejectWithValue }) => {
-    try {
-      return await createUser(userData);
-    } catch (error) {
-      return rejectWithValue(extractErrorPayload(error));
-    }
-  }
-);
-
-export const updateUserThunk = createAsyncThunk(
-  'users/update',
-  async ({ id, userData }, { rejectWithValue }) => {
-    try {
-      return await updateUser(id, userData);
-    } catch (error) {
-      return rejectWithValue(extractErrorPayload(error));
-    }
-  }
-);
-
-export const deleteUserThunk = createAsyncThunk(
-  'users/delete',
-  async (id, { rejectWithValue }) => {
-    try {
-      await deleteUser(id);
-      return id;
-    } catch (error) {
-      return rejectWithValue(extractErrorMessage(error));
-    }
-  }
-);
-
-export const changePasswordThunk = createAsyncThunk(
-  'users/changePassword',
-  async (passwordData, { rejectWithValue }) => {
-    try {
-      return await changeMyPassword(passwordData);
-    } catch (error) {
-      return rejectWithValue(extractErrorPayload(error));
-    }
-  }
-);
-
-export const resetPasswordThunk = createAsyncThunk(
-  'users/resetPassword',
-  async (id, { rejectWithValue }) => {
-    try {
-      return await resetUserPassword(id);
-    } catch (error) {
-      return rejectWithValue(extractErrorMessage(error));
-    }
-  }
-);
-
-// Helpers para extraer el mensaje de error
+// Helpers for extracting the error message
 const extractErrorMessage = (error) => {
   if (!error.response) {
     return 'No se pudo conectar con el servidor';
@@ -109,6 +30,78 @@ const extractErrorPayload = (error) => {
   return { message: data.errorMessage || data.message || 'Ocurrió un error' };
 };
 
+// Thunks
+export const fetchAllUsers = createAsyncThunk('users/fetchAll', async (_, { rejectWithValue }) => {
+  try {
+    return await getAllUsers();
+  } catch (error) {
+    return rejectWithValue(extractErrorMessage(error));
+  }
+});
+
+export const fetchUserById = createAsyncThunk(
+  'users/fetchById',
+  async (id, { rejectWithValue }) => {
+    try {
+      return await getUserById(id);
+    } catch (error) {
+      return rejectWithValue(extractErrorMessage(error));
+    }
+  },
+);
+
+export const createUserThunk = createAsyncThunk(
+  'users/create',
+  async (userData, { rejectWithValue }) => {
+    try {
+      return await createUser(userData);
+    } catch (error) {
+      return rejectWithValue(extractErrorPayload(error));
+    }
+  },
+);
+
+export const updateUserThunk = createAsyncThunk(
+  'users/update',
+  async ({ id, userData }, { rejectWithValue }) => {
+    try {
+      return await updateUser(id, userData);
+    } catch (error) {
+      return rejectWithValue(extractErrorPayload(error));
+    }
+  },
+);
+
+export const deleteUserThunk = createAsyncThunk('users/delete', async (id, { rejectWithValue }) => {
+  try {
+    await deleteUser(id);
+    return id;
+  } catch (error) {
+    return rejectWithValue(extractErrorMessage(error));
+  }
+});
+
+export const changePasswordThunk = createAsyncThunk(
+  'users/changePassword',
+  async (passwordData, { rejectWithValue }) => {
+    try {
+      return await changeMyPassword(passwordData);
+    } catch (error) {
+      return rejectWithValue(extractErrorPayload(error));
+    }
+  },
+);
+
+export const resetPasswordThunk = createAsyncThunk(
+  'users/resetPassword',
+  async (id, { rejectWithValue }) => {
+    try {
+      return await resetUserPassword(id);
+    } catch (error) {
+      return rejectWithValue(extractErrorMessage(error));
+    }
+  },
+);
 
 const initialState = {
   users: [],
@@ -130,19 +123,17 @@ const usersSlice = createSlice({
     },
     clearResetPasswordData: (state) => {
       state.resetPasswordData = null;
-    },    
+    },
     clearFieldError: (state, action) => {
       if (state.fieldErrors) {
-        state.fieldErrors = state.fieldErrors.filter(
-          (e) => e.field !== action.payload
-        );
+        state.fieldErrors = state.fieldErrors.filter((e) => e.field !== action.payload);
       }
-    },    
+    },
     clearCurrentUser: (state) => {
       state.currentUser = null;
     },
   },
-  
+
   extraReducers: (builder) => {
     builder
       // fetchAllUsers
@@ -184,14 +175,14 @@ const usersSlice = createSlice({
         state.users.push(action.payload);
       })
       .addCase(createUserThunk.rejected, (state, action) => {
-          state.loading = false;
-          if (action.payload?.errors) {
-            state.fieldErrors = action.payload.errors;
-            state.error = null;   // ← no hay error general
-          } else {
-            state.error = action.payload?.message || 'Error al crear usuario';
-            state.fieldErrors = null;
-          }
+        state.loading = false;
+        if (action.payload?.errors) {
+          state.fieldErrors = action.payload.errors;
+          state.error = null; // ← no hay error general
+        } else {
+          state.error = action.payload?.message || 'Error al crear usuario';
+          state.fieldErrors = null;
+        }
       })
 
       // updateUserThunk
@@ -262,15 +253,11 @@ const usersSlice = createSlice({
       .addCase(resetPasswordThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      }); 
+      });
   },
 });
 
-export const { 
-  clearUsersError, 
-  clearFieldError, 
-  clearCurrentUser,
-  clearResetPasswordData, 
-} = usersSlice.actions;
+export const { clearUsersError, clearFieldError, clearCurrentUser, clearResetPasswordData } =
+  usersSlice.actions;
 
 export default usersSlice.reducer;

@@ -23,6 +23,9 @@ import { ChangePasswordPage } from "../pages/user/perfil/ChangePasswordPage"
 import { ForbiddenPage } from "../pages/shared/ForbiddenPage"
 import { UserFormPage } from "../pages/dashboard/users/UserFormPage"
 import { UserDetailPage } from "../pages/dashboard/users/UserDetailPage"
+import { CitizenListPage } from "../pages/dashboard/citizens/CitizenListPage"
+import { CitizenFormPage } from "../pages/dashboard/citizens/CitizenFormPage"
+import { CitizenDetailPage } from "../pages/dashboard/citizens/CitizenDetailPage"
 
 
 export const AppRoutes = () => {
@@ -78,10 +81,10 @@ export const AppRoutes = () => {
           <Route path="/admin/users/:id/edit" element={<UserFormPage />} />
 
           {/* Citizens */}
-          {/* <Route path="/admin/citizens" element={<CitizenListPage />} />
+          <Route path="/admin/citizens" element={<CitizenListPage />} />
           <Route path="/admin/citizens/new" element={<CitizenFormPage />} />
           <Route path="/admin/citizens/:id" element={<CitizenDetailPage />} />
-          <Route path="/admin/citizens/:id/edit" element={<CitizenFormPage />} /> */}
+          <Route path="/admin/citizens/:id/edit" element={<CitizenFormPage />} />
         </Route>
       </Route>
 
