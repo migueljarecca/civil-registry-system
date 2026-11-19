@@ -6,7 +6,8 @@ import {
   createUserThunk,
   updateUserThunk,
   clearCurrentUser,
-  clearUsersError
+  clearUsersError,
+  clearFieldError
 } from '../../../store/slices/usersSlice';
 import { Input } from '../../../components/ui/Input/Input';
 import { Button } from '../../../components/ui/Button/Button';
@@ -46,7 +47,7 @@ export const UserFormPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { currentUser, loading, error } = useSelector((state) => state.users);
+  const { currentUser, loading, error, fieldErrors } = useSelector((state) => state.users);
 
   const [form, setForm] = useState(initialForm);
   const [localErrors, setLocalErrors] = useState({});
@@ -101,6 +102,15 @@ export const UserFormPage = () => {
       [name]: type === 'checkbox' ? checked : value,
     });
     setLocalErrors((prev) => ({ ...prev, [name]: '' }));
+
+    // We clear the specific backend error.
+    if (fieldErrors) {
+      dispatch(clearFieldError(name));
+    }
+    // We clear the general error
+    if (error) {
+      dispatch(clearUsersError());
+    }
   };
 
   const onRoleChange = (role) => {
@@ -139,6 +149,15 @@ export const UserFormPage = () => {
 
     setLocalErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  // Merge local validation errors with backend error
+  const getFieldError = (fieldName) => {
+    return (
+      localErrors[fieldName] ||
+      fieldErrors?.find((e) => e.field === fieldName)?.message ||
+      null
+    );
   };
 
   const onSubmit = async (e) => {
@@ -209,8 +228,9 @@ export const UserFormPage = () => {
               value={form.name}
               onChange={onInputChange}
               disabled={loading}
-              error={localErrors.name}
+              error={getFieldError('name')}
               placeholder="Ej. Juan"
+              required
             />
             <Input
               label="Apellido"
@@ -218,8 +238,9 @@ export const UserFormPage = () => {
               value={form.lastname}
               onChange={onInputChange}
               disabled={loading}
-              error={localErrors.lastname}
+              error={getFieldError('lastname')}
               placeholder="Ej. Pérez"
+              required
             />
           </div>
 
@@ -230,9 +251,10 @@ export const UserFormPage = () => {
               value={form.dni}
               onChange={onInputChange}
               disabled={loading}
-              error={localErrors.dni}
+              error={getFieldError('dni')}
               maxLength={8}
               placeholder="Ej. 12345678"
+              required
             />
             <Input
               label="Correo electrónico"
@@ -241,8 +263,9 @@ export const UserFormPage = () => {
               value={form.email}
               onChange={onInputChange}
               disabled={loading}
-              error={localErrors.email}
+              error={getFieldError('email')}
               placeholder="tu@correo.com"
+              required
             />
           </div>
 
@@ -255,9 +278,10 @@ export const UserFormPage = () => {
                 value={form.password}
                 onChange={onInputChange}
                 disabled={loading}
-                error={localErrors.password}
+                error={getFieldError('password')}
                 hint="El administrador debe copiar esta contraseña y compartirla con el usuario."
                 placeholder="••••••••"
+                required
               />
 
               <button
